@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import store from './store';
 import TaskList from './components/TaskList';
-import Tab from './components/Tab';
 import { ApplicationState } from './store/reducer';
+import MainContainer from './components/MainContainer';
 
 const connected = {
-	TaskList: connect((state: ApplicationState) => ({ tasks: state.tasks }))(TaskList),
-	// Tab: connect((state: ApplicationState) => ({ tabs: state.tabs, tasks: state.tasks }))(Tab),
+	MainContainer: connect((state: ApplicationState) => ({ tabs: state.tabs, tasks: state.tasks }))(MainContainer),
 }
 
 class App extends React.Component<{}, {}> {
@@ -16,8 +15,7 @@ class App extends React.Component<{}, {}> {
 	render() {
 		return (
 			<Provider store={store}>
-				<connected.TaskList />
-				{/* <connected.Tab /> */}
+				<connected.MainContainer />
 			</Provider>
 		)
 	}

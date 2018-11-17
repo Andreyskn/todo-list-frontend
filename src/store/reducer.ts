@@ -9,8 +9,8 @@ export type Task = {
 export type Tab = {
 	id: number,
 	title: string,
-	active: boolean,
-	tasks: number[],
+	isActive: boolean,
+	taskIds: number[],
 }
 
 export type ApplicationState = {
@@ -19,16 +19,19 @@ export type ApplicationState = {
 };
 
 const initialState: ApplicationState = {
-	tabs: [{ id: 0, title: 'Tab', active: true, tasks: [0] }],
-	tasks: [{ id: 0, title: '', done: false }]
+	tabs: [{ id: 0, title: 'Tab', isActive: true, taskIds: [0] }],
+	tasks: [
+		{ id: 0, title: '', done: false },
+		{ id: 1, title: '', done: false },
+	]
 }
 
 export default function (state = initialState, { type, payload }) {
 	switch (type) {
-		case actionTypes.tasks.ADD_TASK:
-		case actionTypes.tasks.REMOVE_TASK:
-		case actionTypes.tasks.TOGGLE_TASK:
-		case actionTypes.tasks.UPDATE_TASK_TITLE:
+		case actionTypes.ADD_TASK:
+		case actionTypes.REMOVE_TASK:
+		case actionTypes.TOGGLE_TASK:
+		case actionTypes.UPDATE_TASK_TITLE:
 			return { ...state, ...payload };
 
 		default:
