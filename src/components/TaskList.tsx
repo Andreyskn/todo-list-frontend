@@ -1,23 +1,16 @@
 import React from 'react';
 import Task from './Task';
 import { Button } from './base-ui';
-import { actions } from '../store/actions';
+import { facadeActions } from '../store/actions';
 
 export default class TaskList extends React.Component<any> {
 
-	toggleTask = (id) => () => {
-		const { tasks, dispatch } = this.props;
-		const taskList = tasks.map(task => task.id === id ? { ...task, done: !task.done } : task);
-
-		dispatch(actions.toggleTask(taskList));
-	}
+	toggleTask = (id) => () => this.props.dispatch(facadeActions.toggleTask(id));
 
 	updateTaskTitle = (id) => (e) => {
-		const { tasks, dispatch } = this.props;
 		const title = e.target.value;
-		const taskList = tasks.map(task => task.id === id ? { ...task, title } : task); // bug
-
-		dispatch(actions.updateTaskTitle(taskList));
+		
+		this.props.dispatch(facadeActions.updateTaskTitle(id, title));
 	}
 
 	render() {

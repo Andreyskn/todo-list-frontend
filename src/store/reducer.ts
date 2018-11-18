@@ -1,4 +1,4 @@
-import { actionTypes } from './actions';
+import { reducerActionTypes } from './actions';
 
 export type Task = {
 	id: number,
@@ -28,10 +28,10 @@ const initialState: ApplicationState = {
 
 export default function (state = initialState, { type, payload }) {
 	switch (type) {
-		case actionTypes.ADD_TASK:
-		case actionTypes.REMOVE_TASK:
-		case actionTypes.TOGGLE_TASK:
-		case actionTypes.UPDATE_TASK_TITLE:
+		case reducerActionTypes.ADD_TASK:
+		case reducerActionTypes.REMOVE_TASK:
+		case reducerActionTypes.TOGGLE_TASK:
+		case reducerActionTypes.UPDATE_TASK_TITLE:
 			return { ...state, ...payload };
 
 		default:
