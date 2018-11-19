@@ -31,6 +31,7 @@
 		"webpack-dev-server": "^3.1.10"
 	},
 	"dependencies": {
+		"immer": "^1.8.0",
 		"react": "^16.6.0",
 		"react-dom": "^16.6.0",
 		"react-redux": "^5.1.0",

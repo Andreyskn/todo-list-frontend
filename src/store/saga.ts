@@ -1,55 +1,72 @@
 import { put, select, call, takeEvery } from 'redux-saga/effects';
-import { reducerActions, facadeActionTypes } from './actions';
+import { systemActions, facadeActionTypes } from './actions';
+import produce from 'immer';
 
-const generateId = (items) => Math.max(...items.map(item => item.id)) + 1;
+const generateId = (ids) => Math.max(...ids) + 1;
 const createEmptyTask = (id) => ({ id, title: '', done: false });
 
 function* addTask({ payload: tabId }: any) {
 	const { tabs, tasks } = yield select();
-	const newTaskId = yield call(generateId, tasks);
-	const taskList = [...tasks, yield call(createEmptyTask, newTaskId)];
-	const tabList = tabs.map(tab => tab.id === tabId ? { ...tab, taskIds: [...tab.taskIds, newTaskId] } : tab);
+	const newTaskId = yield call(generateId, tasks.allIds);
+	const newTask = yield call(createEmptyTask, newTaskId);
 
-	yield put(reducerActions.addTask({ tasks: taskList, tabs: tabList }));
+	const updatedTasks = produce(tasks, draftTasks => {
+		draftTasks.byId[newTaskId] = newTask;
+		draftTasks.allIds.push(newTaskId);
+	});
+	const updatedTabs = produce(tabs, draftTabs => {
+		draftTabs.byId[tabId].taskIds.push(newTaskId);
+	});
+
+	yield put(systemActions.addTask({ tasks: updatedTasks, tabs: updatedTabs }));
 }
 
 function* removeTask({ payload: { tabId, taskId } }: any) {
 	const { tabs, tasks } = yield select();
-	const activeTab = tabs.find(tab => tab.id === tabId);
-	const hasSingleTask = activeTab.taskIds.length === 1;
-	const taskToRemove = tasks.find(task => task.id === taskId);
+	const hasSingleTask = tabs.byId[tabId].taskIds.length === 1;
+	const taskToRemove = tasks.byId[taskId];
 
 	if (hasSingleTask && !taskToRemove.title && !taskToRemove.done) return;
 
-	const taskList = tasks.filter(task => task.id !== taskId);
-
-	let newTaskId;
+	let newTaskId, newTask;
 	if (hasSingleTask) {
-		newTaskId = yield call(generateId, tasks);
-		taskList.push(yield call(createEmptyTask, newTaskId));
+		newTaskId = yield call(generateId, tasks.allIds);
+		newTask = yield call(createEmptyTask, newTaskId);
 	}
 
-	const updateTaskIds = (taskIds) => {
-		const filtered = taskIds.filter(tId => tId !== taskId);
-		return newTaskId ? [...filtered, newTaskId] : filtered;
-	}
-	const tabList = tabs.map(tab => tab.id === tabId ? { ...tab, taskIds: updateTaskIds(tab.taskIds) } : tab);
+	const updatedTasks = produce(tasks, draftTasks => {
+		delete draftTasks.byId[taskId];
+		draftTasks.allIds = tasks.allIds.filter(id => id !== taskId);
+		if (newTaskId) {
+			draftTasks.byId[newTaskId] = newTask;
+			draftTasks.allIds.push(newTaskId);
+		}
+	});
 
-	yield put(reducerActions.removeTask({ tasks: taskList, tabs: tabList }));
+	const updatedTabs = produce(tabs, draftTabs => {
+		draftTabs.byId[tabId].taskIds = tabs.byId[tabId].taskIds.filter(id => id !== taskId);
+		if (newTaskId) draftTabs.byId[tabId].taskIds.push(newTaskId);
+	});
+
+	yield put(systemActions.removeTask({ tasks: updatedTasks, tabs: updatedTabs }));
 }
 
 function* toggleTask({ payload: taskId }: any) {
 	const { tasks } = yield select();
-	const taskList = tasks.map(task => task.id === taskId ? { ...task, done: !task.done } : task);
+	const updatedTasks = produce(tasks, draftTasks => {
+		draftTasks.byId[taskId].done = !tasks.byId[taskId].done;
+	});
 
-	yield put(reducerActions.toggleTask(taskList));
+	yield put(systemActions.toggleTask(updatedTasks));
 }
 
 function* updateTaskTitle({ payload: { taskId, title } }: any) {
 	const { tasks } = yield select();
-	const taskList = tasks.map(task => task.id === taskId ? { ...task, title } : task);
+	const updatedTasks = produce(tasks, draftTasks => {
+		draftTasks.byId[taskId].title = title;
+	});
 
-	yield put(reducerActions.updateTaskTitle(taskList));
+	yield put(systemActions.updateTaskTitle(updatedTasks));
 }
 
 export function* saga() {
