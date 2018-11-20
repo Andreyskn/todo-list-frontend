@@ -1,10 +1,10 @@
-import { Task } from './reducer'
+import { Tasks, Tabs } from './reducer'
 
 export const systemActionTypes = {
-	ADD_TASK: '[TASKS] ADD_TASK',
-	REMOVE_TASK: '[TASKS] REMOVE_TASK',
-	TOGGLE_TASK: '[TASKS] TOGGLE_TASK',
-	UPDATE_TASK_TITLE: '[TASKS] UPDATE_TASK_TITLE',
+	ADD_TASK: '@@tasks/ADD_TASK',
+	REMOVE_TASK: '@@tasks/REMOVE_TASK',
+	TOGGLE_TASK: '@@tasks/TOGGLE_TASK',
+	UPDATE_TASK_TITLE: '@@tasks/UPDATE_TASK_TITLE',
 }
 
 export const facadeActionTypes = {
@@ -15,10 +15,10 @@ export const facadeActionTypes = {
 }
 
 export const systemActions = {
-	addTask: (changeSet) => ({ type: systemActionTypes.ADD_TASK, payload: changeSet }),
-	removeTask: (changeSet) => ({ type: systemActionTypes.REMOVE_TASK, payload: changeSet }),
-	toggleTask: (tasks: Task[]) => ({ type: systemActionTypes.TOGGLE_TASK, payload: { tasks } }),
-	updateTaskTitle: (tasks: Task[]) => ({ type: systemActionTypes.UPDATE_TASK_TITLE, payload: { tasks } }),
+	addTask: (changeSet: { tasks: Tasks, tabs: Tabs }) => ({ type: systemActionTypes.ADD_TASK, payload: changeSet }),
+	removeTask: (changeSet: { tasks: Tasks, tabs: Tabs }) => ({ type: systemActionTypes.REMOVE_TASK, payload: changeSet }),
+	toggleTask: (tasks: Tasks) => ({ type: systemActionTypes.TOGGLE_TASK, payload: { tasks } }),
+	updateTaskTitle: (tasks: Tasks) => ({ type: systemActionTypes.UPDATE_TASK_TITLE, payload: { tasks } }),
 }
 
 export const facadeActions = {

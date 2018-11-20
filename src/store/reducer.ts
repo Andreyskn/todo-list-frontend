@@ -1,24 +1,35 @@
 import { systemActionTypes } from './actions';
+import { Reducer } from 'redux';
 
-// export type Task = {
-// 	id: number,
-// 	title: string,
-// 	done: boolean,
-// }
+export type Task = {
+	id: number,
+	title: string,
+	done: boolean,
+}
 
-// export type Tab = {
-// 	id: number,
-// 	title: string,
-// 	isActive: boolean,
-// 	taskIds: number[],
-// }
+export type Tasks = {
+	byId: { [key: number]: Task },
+	allIds: number[],
+}
 
-// export type ApplicationState = {
-// 	tabs: Tab[],
-// 	tasks: Task[],
-// };
+export type Tab = {
+	id: number,
+	title: string,
+	taskIds: number[],
+}
 
-const initialState = {
+export type Tabs = {
+	byId: { [key: number]: Tab },
+	allIds: number[],
+}
+
+export type ApplicationState = {
+	activeTab: number,
+	tabs: Tabs,
+	tasks: Tasks,
+};
+
+const initialState: ApplicationState = {
 	activeTab: 0,
 	tabs: {
 		byId: {
@@ -52,7 +63,7 @@ const initialState = {
 	}
 }
 
-export default function (state = initialState, { type, payload }) {
+export const reducer: Reducer<ApplicationState> = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case systemActionTypes.ADD_TASK:
 		case systemActionTypes.REMOVE_TASK:

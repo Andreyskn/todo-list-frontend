@@ -1,9 +1,18 @@
 import React from 'react';
+import { Dispatch } from 'redux';
+import { Task as TaskType } from '../store/reducer';
 import Task from './Task';
 import { Button } from './base-ui';
 import { facadeActions } from '../store/actions';
 
-export default class TaskList extends React.Component<any> {
+interface TaskListProps {
+	dispatch: Dispatch,
+	tasks: TaskType[],
+	addTask: () => any,
+	removeTask: (taskId: number) => any,
+}
+
+export default class TaskList extends React.Component<TaskListProps, {}> {
 
 	toggleTask = (id) => () => this.props.dispatch(facadeActions.toggleTask(id));
 

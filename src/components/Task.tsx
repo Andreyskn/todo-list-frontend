@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { FocusEvent } from 'react';
 import { Button, Checkbox, Textarea } from './base-ui';
 
-export default class Task extends React.Component<any, any> {
+interface TaskProps {
+	title: string,
+	done: boolean,
+	removeTask: () => any;
+	toggleTask: () => any;
+	updateTaskTitle: (e: FocusEvent<Element>) => any;
+}
+
+interface TaskState {
+	title: string,
+}
+
+export default class Task extends React.Component<TaskProps, TaskState> {
 	state = {
 		title: this.props.title,
 	}
 
-	onChange = (e) => {
+	onChange = (e: any) => {
 		this.setState({ title: e.target.value });
 	}
 

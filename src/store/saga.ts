@@ -1,11 +1,17 @@
-import { put, select, call, takeEvery } from 'redux-saga/effects';
+import { put, select, call, takeEvery, Effect } from 'redux-saga/effects';
 import { systemActions, facadeActionTypes } from './actions';
+import { Task, Tasks, Tab, Tabs } from './reducer';
 import produce from 'immer';
 
-const generateId = (ids) => Math.max(...ids) + 1;
-const createEmptyTask = (id) => ({ id, title: '', done: false });
+type Action<T> = {
+	type: string,
+	payload: T,
+};
 
-function* addTask({ payload: tabId }: any) {
+const generateId = (ids: number[]): number => Math.max(...ids) + 1;
+const createEmptyTask = (id: number): Task => ({ id, title: '', done: false });
+
+function* addTask({ payload: tabId }: Action<number>): Iterator<Effect> {
 	const { tabs, tasks } = yield select();
 	const newTaskId = yield call(generateId, tasks.allIds);
 	const newTask = yield call(createEmptyTask, newTaskId);
@@ -21,7 +27,7 @@ function* addTask({ payload: tabId }: any) {
 	yield put(systemActions.addTask({ tasks: updatedTasks, tabs: updatedTabs }));
 }
 
-function* removeTask({ payload: { tabId, taskId } }: any) {
+function* removeTask({ payload: { tabId, taskId } }: Action<{ tabId: number, taskId: number }>): Iterator<Effect> | void {
 	const { tabs, tasks } = yield select();
 	const hasSingleTask = tabs.byId[tabId].taskIds.length === 1;
 	const taskToRemove = tasks.byId[taskId];
@@ -51,7 +57,7 @@ function* removeTask({ payload: { tabId, taskId } }: any) {
 	yield put(systemActions.removeTask({ tasks: updatedTasks, tabs: updatedTabs }));
 }
 
-function* toggleTask({ payload: taskId }: any) {
+function* toggleTask({ payload: taskId }: Action<number>): Iterator<Effect> {
 	const { tasks } = yield select();
 	const updatedTasks = produce(tasks, draftTasks => {
 		draftTasks.byId[taskId].done = !tasks.byId[taskId].done;
@@ -60,7 +66,7 @@ function* toggleTask({ payload: taskId }: any) {
 	yield put(systemActions.toggleTask(updatedTasks));
 }
 
-function* updateTaskTitle({ payload: { taskId, title } }: any) {
+function* updateTaskTitle({ payload: { taskId, title } }: Action<{ taskId: number, title: string }>): Iterator<Effect> {
 	const { tasks } = yield select();
 	const updatedTasks = produce(tasks, draftTasks => {
 		draftTasks.byId[taskId].title = title;

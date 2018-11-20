@@ -1,12 +1,18 @@
 import React from 'react';
+import { Dispatch } from 'redux';
 import Tab from './Tab';
 import { facadeActions } from '../store/actions';
+import { ApplicationState } from '../store/reducer';
 
-export default class MainContainer extends React.Component<any, any> {
+interface MainContainerProps extends ApplicationState {
+	dispatch: Dispatch,
+}
 
-	addTask = (tabId) => () => this.props.dispatch(facadeActions.addTask(tabId));
+export default class MainContainer extends React.Component<MainContainerProps, {}> {
 
-	removeTask = (tabId) => (taskId) => () => this.props.dispatch(facadeActions.removeTask(tabId, taskId));
+	addTask = (tabId: number) => () => this.props.dispatch(facadeActions.addTask(tabId));
+
+	removeTask = (tabId: number) => (taskId: number) => () => this.props.dispatch(facadeActions.removeTask(tabId, taskId));
 
 	render() {
 		const { activeTab, tabs, tasks, dispatch } = this.props;
