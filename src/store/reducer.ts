@@ -42,9 +42,14 @@ const initialState: ApplicationState = {
 				id: 1,
 				title: 'Tab 2',
 				taskIds: [1],
+			},
+			2: {
+				id: 2,
+				title: 'Tab 3',
+				taskIds: [2],
 			}
 		},
-		allIds: [0, 1],
+		allIds: [0, 1, 2],
 	},
 	tasks: {
 		byId: {
@@ -57,9 +62,14 @@ const initialState: ApplicationState = {
 				id: 1,
 				title: 'Task from second tab',
 				done: false,
+			},
+			2: {
+				id: 2,
+				title: 'Task from third tab',
+				done: false,
 			}
 		},
-		allIds: [0, 1],
+		allIds: [0, 1, 2],
 	}
 }
 
@@ -69,6 +79,9 @@ export const reducer: Reducer<ApplicationState> = (state = initialState, { type,
 		case systemActionTypes.REMOVE_TASK:
 		case systemActionTypes.TOGGLE_TASK:
 		case systemActionTypes.UPDATE_TASK_TITLE:
+		case systemActionTypes.SWITCH_TAB:
+		case systemActionTypes.ADD_TAB:
+		case systemActionTypes.REMOVE_TAB:
 			return { ...state, ...payload };
 
 		default:

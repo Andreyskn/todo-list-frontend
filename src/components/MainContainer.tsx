@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import Tab from './Tab';
+import TabSwitcher from './TabSwitcher';
 import { facadeActions } from '../store/actions';
 import { ApplicationState } from '../store/reducer';
 
@@ -20,7 +21,8 @@ export default class MainContainer extends React.Component<MainContainerProps, {
 		const activeTasks = tabToRender.taskIds.map(taskId => tasks.byId[taskId]);
 
 		return (
-			<div>
+			<div style={{paddingLeft: '500px', paddingTop: '30px'}}>
+				<TabSwitcher dispatch={dispatch} tabs={tabs} activeTab={activeTab} />
 				<Tab 
 					tabId={tabToRender.id}
 					title={tabToRender.title}

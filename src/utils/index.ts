@@ -1,1 +1,0 @@
-export const emptyTask = (id = 0) => ({ id, title: '', done: false });
