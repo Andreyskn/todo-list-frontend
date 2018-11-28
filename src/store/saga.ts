@@ -9,8 +9,19 @@ type Action<T> = {
 };
 
 const generateId = (ids: number[]): number => Math.max(...ids) + 1;
+
 const createNewTask = (id: number): Task => ({ id, title: '', done: false });
+
 const createNewTab = (id: number, taskId: number): Tab => ({ id, title: 'New tab', taskIds: [taskId] });
+
+function* getNewTabWithTask() {
+	const { tabs, tasks } = yield select(),
+	newTaskId = yield call(generateId, tasks.allIds),
+	newTask = yield call(createNewTask, newTaskId),
+	newTabId = yield call(generateId, tabs.allIds),
+	newTab = yield call(createNewTab, newTabId, newTaskId);
+	return { newTaskId, newTask, newTabId, newTab }
+}
 
 function* addTask({ payload: tabId }: Action<number>): Iterator<Effect> {
 	const { tabs, tasks } = yield select();
@@ -78,10 +89,7 @@ function* updateTaskTitle({ payload: { taskId, title } }: Action<{ taskId: numbe
 
 function* addTab(): Iterator<Effect> {
 	const { tabs, tasks } = yield select();
-	const newTaskId = yield call(generateId, tasks.allIds);
-	const newTask = yield call(createNewTask, newTaskId);
-	const newTabId = yield call(generateId, tabs.allIds);
-	const newTab = yield call(createNewTab, newTabId, newTaskId);
+	const { newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask);
 
 	const updatedTabs = produce(tabs, draftTabs => {
 		draftTabs.byId[newTabId] = newTab;
@@ -100,22 +108,19 @@ function* removeTab({ payload: tabId }: Action<number>): Iterator<Effect> {
 	const { tabs, tasks, activeTab } = yield select();
 	const tasksToRemove = tabs.byId[tabId].taskIds;
 	const hasSingleTab = tabs.allIds.length === 1;
+	const hasSingleTask = tasks.allIds.length === 1;
+	const firstTask = tasks.byId[tasks.allIds[0]];
 
-	// TODO: return on attempt to delete sole unmodified tab 
+	if (hasSingleTab && hasSingleTask && !firstTask.title && !firstTask.done) return;
 
 	if (!hasSingleTab && tabId === activeTab) {
 		const currentTabIndex = tabs.allIds.indexOf(tabId);
-		if (tabs.allIds[currentTabIndex + 1]) yield put(systemActions.switchTab(tabs.allIds[currentTabIndex + 1]));
-		else if (tabs.allIds[currentTabIndex - 1]) yield put(systemActions.switchTab(tabs.allIds[currentTabIndex - 1]));
+		if (tabs.allIds[currentTabIndex + 1] != null) yield put(systemActions.switchTab(tabs.allIds[currentTabIndex + 1]));
+		else if (tabs.allIds[currentTabIndex - 1] != null) yield put(systemActions.switchTab(tabs.allIds[currentTabIndex - 1]));
 	}
 
 	let newTabId, newTab, newTaskId, newTask;
-	if (hasSingleTab) {
-		newTaskId = yield call(generateId, tasks.allIds);
-		newTask = yield call(createNewTask, newTaskId);
-		newTabId = yield call(generateId, tabs.allIds);
-		newTab = yield call(createNewTab, newTabId, newTaskId);
-	}
+	if (hasSingleTab) ({ newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask));
 
 	const updatedTabs = produce(tabs, draftTabs => {
 		delete draftTabs.byId[tabId];
@@ -139,6 +144,15 @@ function* removeTab({ payload: tabId }: Action<number>): Iterator<Effect> {
 	if (newTab) yield put(systemActions.switchTab(newTabId));
 }
 
+function* updateTabTitle({ payload: { tabId, title } }: Action<{ tabId: number, title: string }>): Iterator<Effect> {
+	const { tabs } = yield select();
+	const updatedTabs = produce(tabs, draftTabs => {
+		draftTabs.byId[tabId].title = title;
+	});
+
+	yield put(systemActions.updateTabTitle(updatedTabs));
+}
+
 export function* saga() {
 	yield takeEvery(facadeActionTypes.ADD_TASK, addTask);
 	yield takeEvery(facadeActionTypes.REMOVE_TASK, removeTask);
@@ -146,4 +160,5 @@ export function* saga() {
 	yield takeEvery(facadeActionTypes.UPDATE_TASK_TITLE, updateTaskTitle);
 	yield takeEvery(facadeActionTypes.ADD_TAB, addTab);
 	yield takeEvery(facadeActionTypes.REMOVE_TAB, removeTab);
+	yield takeEvery(facadeActionTypes.UPDATE_TAB_TITLE, updateTabTitle);
 }

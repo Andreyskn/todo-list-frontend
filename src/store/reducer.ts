@@ -82,6 +82,7 @@ export const reducer: Reducer<ApplicationState> = (state = initialState, { type,
 		case systemActionTypes.SWITCH_TAB:
 		case systemActionTypes.ADD_TAB:
 		case systemActionTypes.REMOVE_TAB:
+		case systemActionTypes.UPDATE_TAB_TITLE:
 			return { ...state, ...payload };
 
 		default:

@@ -8,6 +8,7 @@ export const systemActionTypes = {
 	SWITCH_TAB: '@@tabs/SWITCH_TAB',
 	ADD_TAB: '@@tabs/ADD_TAB',
 	REMOVE_TAB: '@@tabs/REMOVE_TAB',
+	UPDATE_TAB_TITLE: '@@tabs/UPDATE_TAB_TITLE',
 }
 
 export const facadeActionTypes = {
@@ -17,6 +18,7 @@ export const facadeActionTypes = {
 	UPDATE_TASK_TITLE: '[FACADE][TASKS] UPDATE_TASK_TITLE',
 	ADD_TAB: '[FACADE][TABS] ADD_TAB',
 	REMOVE_TAB: '[FACADE][TABS] REMOVE_TAB',
+	UPDATE_TAB_TITLE: '[FACADE][TABS] UPDATE_TAB_TITLE',
 }
 
 export const systemActions = {
@@ -27,13 +29,15 @@ export const systemActions = {
 	switchTab: (activeTab: number) => ({ type: systemActionTypes.SWITCH_TAB, payload: { activeTab } }),
 	addTab: (changeSet: { tasks: Tasks, tabs: Tabs, activeTab: number }) => ({ type: systemActionTypes.ADD_TAB, payload: changeSet }),
 	removeTab: (changeSet: { tasks: Tasks, tabs: Tabs }) => ({ type: systemActionTypes.REMOVE_TAB, payload: changeSet }),
+	updateTabTitle: (tabs: Tabs) => ({ type: systemActionTypes.UPDATE_TAB_TITLE, payload: { tabs } }),
 }
 
 export const facadeActions = {
 	addTask: (tabId: number) => ({ type: facadeActionTypes.ADD_TASK, payload: tabId }),
 	removeTask: (tabId: number, taskId: number) => ({ type: facadeActionTypes.REMOVE_TASK, payload: { tabId, taskId } }),
 	toggleTask: (taskId: number) => ({ type: facadeActionTypes.TOGGLE_TASK, payload: taskId }),
-	updateTaskTitle: (taskId: number, title: string) => ({type: facadeActionTypes.UPDATE_TASK_TITLE, payload: { taskId, title } }),
+	updateTaskTitle: (taskId: number, title: string) => ({ type: facadeActionTypes.UPDATE_TASK_TITLE, payload: { taskId, title } }),
 	addTab: () => ({ type: facadeActionTypes.ADD_TAB, payload: {} }),
 	removeTab: (tabId: number) => ({ type: facadeActionTypes.REMOVE_TAB, payload: tabId }),
+	updateTabTitle: (tabId: number, title: string) => ({ type: facadeActionTypes.UPDATE_TAB_TITLE, payload: { tabId, title } }),
 }
