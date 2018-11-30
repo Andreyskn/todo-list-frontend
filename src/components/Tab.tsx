@@ -12,7 +12,11 @@ interface TabProps {
 	tasks: Task[],
 }
 
-export default class Tab extends React.Component<TabProps, {}> {
+interface TabState {
+	renameMode: boolean,
+}
+
+export default class Tab extends React.Component<TabProps, TabState> {
 
 	state = {
 		renameMode: false,
