@@ -8,7 +8,7 @@ type Action<T> = {
 	payload: T,
 };
 
-const generateId = (ids: number[]): number => Math.max(...ids) + 1;
+const generateId = (ids: string[]): number => Math.max(...ids.map(i => parseInt(i, 10))) + 1;
 
 const createNewTask = (id: number): Task => ({ id, title: '', done: false });
 
@@ -16,24 +16,23 @@ const createNewTab = (id: number, taskId: number): Tab => ({ id, title: 'New tab
 
 function* getNewTabWithTask() {
 	const { tabs, tasks } = yield select(),
-	newTaskId = yield call(generateId, tasks.allIds),
-	newTask = yield call(createNewTask, newTaskId),
-	newTabId = yield call(generateId, tabs.allIds),
-	newTab = yield call(createNewTab, newTabId, newTaskId);
+		newTaskId = yield call(generateId, Object.keys(tasks)),
+		newTask = yield call(createNewTask, newTaskId),
+		newTabId = yield call(generateId, Object.keys(tabs)),
+		newTab = yield call(createNewTab, newTabId, newTaskId);
 	return { newTaskId, newTask, newTabId, newTab }
 }
 
 function* addTask({ payload: tabId }: Action<number>): Iterator<Effect> {
 	const { tabs, tasks } = yield select();
-	const newTaskId = yield call(generateId, tasks.allIds);
+	const newTaskId = yield call(generateId, Object.keys(tasks));
 	const newTask = yield call(createNewTask, newTaskId);
 
 	const updatedTasks = produce(tasks, draftTasks => {
-		draftTasks.byId[newTaskId] = newTask;
-		draftTasks.allIds.push(newTaskId);
+		draftTasks[newTaskId] = newTask;
 	});
 	const updatedTabs = produce(tabs, draftTabs => {
-		draftTabs.byId[tabId].taskIds.push(newTaskId);
+		draftTabs[tabId].taskIds.push(newTaskId);
 	});
 
 	yield put(systemActions.addTask({ tasks: updatedTasks, tabs: updatedTabs }));
@@ -41,29 +40,24 @@ function* addTask({ payload: tabId }: Action<number>): Iterator<Effect> {
 
 function* removeTask({ payload: { tabId, taskId } }: Action<{ tabId: number, taskId: number }>): Iterator<Effect> | void {
 	const { tabs, tasks } = yield select();
-	const hasSingleTask = tabs.byId[tabId].taskIds.length === 1;
-	const taskToRemove = tasks.byId[taskId];
+	const hasSingleTask = tabs[tabId].taskIds.length === 1;
+	const taskToRemove = tasks[taskId];
 
 	if (hasSingleTask && !taskToRemove.title && !taskToRemove.done) return;
 
 	let newTaskId, newTask;
 	if (hasSingleTask) {
-		newTaskId = yield call(generateId, tasks.allIds);
+		newTaskId = yield call(generateId, Object.keys(tasks));
 		newTask = yield call(createNewTask, newTaskId);
 	}
 
 	const updatedTasks = produce(tasks, draftTasks => {
-		delete draftTasks.byId[taskId];
-		draftTasks.allIds = tasks.allIds.filter(id => id !== taskId);
-		if (newTaskId) {
-			draftTasks.byId[newTaskId] = newTask;
-			draftTasks.allIds.push(newTaskId);
-		}
+		delete draftTasks[taskId];
+		if (newTaskId) draftTasks[newTaskId] = newTask;
 	});
-
 	const updatedTabs = produce(tabs, draftTabs => {
-		draftTabs.byId[tabId].taskIds = tabs.byId[tabId].taskIds.filter(id => id !== taskId);
-		if (newTaskId) draftTabs.byId[tabId].taskIds.push(newTaskId);
+		draftTabs[tabId].taskIds = tabs[tabId].taskIds.filter(id => id !== taskId);
+		if (newTaskId) draftTabs[tabId].taskIds.push(newTaskId);
 	});
 
 	yield put(systemActions.removeTask({ tasks: updatedTasks, tabs: updatedTabs }));
@@ -71,8 +65,9 @@ function* removeTask({ payload: { tabId, taskId } }: Action<{ tabId: number, tas
 
 function* toggleTask({ payload: taskId }: Action<number>): Iterator<Effect> {
 	const { tasks } = yield select();
+
 	const updatedTasks = produce(tasks, draftTasks => {
-		draftTasks.byId[taskId].done = !tasks.byId[taskId].done;
+		draftTasks[taskId].done = !tasks[taskId].done;
 	});
 
 	yield put(systemActions.toggleTask(updatedTasks));
@@ -80,8 +75,9 @@ function* toggleTask({ payload: taskId }: Action<number>): Iterator<Effect> {
 
 function* updateTaskTitle({ payload: { taskId, title } }: Action<{ taskId: number, title: string }>): Iterator<Effect> {
 	const { tasks } = yield select();
+
 	const updatedTasks = produce(tasks, draftTasks => {
-		draftTasks.byId[taskId].title = title;
+		draftTasks[taskId].title = title;
 	});
 
 	yield put(systemActions.updateTaskTitle(updatedTasks));
@@ -92,13 +88,10 @@ function* addTab(): Iterator<Effect> {
 	const { newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask);
 
 	const updatedTabs = produce(tabs, draftTabs => {
-		draftTabs.byId[newTabId] = newTab;
-		draftTabs.allIds.push(newTabId);
+		draftTabs[newTabId] = newTab;
 	});
-
 	const updatedTasks = produce(tasks, draftTasks => {
-		draftTasks.byId[newTaskId] = newTask;
-		draftTasks.allIds.push(newTaskId);
+		draftTasks[newTaskId] = newTask;
 	});
 
 	yield put(systemActions.addTab({ tasks: updatedTasks, tabs: updatedTabs, activeTab: newTabId }));
@@ -106,38 +99,30 @@ function* addTab(): Iterator<Effect> {
 
 function* removeTab({ payload: tabId }: Action<number>): Iterator<Effect> {
 	const { tabs, tasks, activeTab } = yield select();
-	const tasksToRemove = tabs.byId[tabId].taskIds;
-	const hasSingleTab = tabs.allIds.length === 1;
-	const hasSingleTask = tasks.allIds.length === 1;
-	const firstTask = tasks.byId[tasks.allIds[0]];
+	const tasksToRemove = tabs[tabId].taskIds;
+	const tabsKeys = Object.keys(tabs);
+	const isOnlyTab = tabsKeys.length === 1;
+	const hasSingleTask = tabs[tabId].taskIds.length === 1;
+	const firstTask = (Object as any).values(tasks)[0];
 
-	if (hasSingleTab && hasSingleTask && !firstTask.title && !firstTask.done) return;
+	if (isOnlyTab && hasSingleTask && !firstTask.title && !firstTask.done) return;
 
-	if (!hasSingleTab && tabId === activeTab) {
-		const currentTabIndex = tabs.allIds.indexOf(tabId);
-		if (tabs.allIds[currentTabIndex + 1] != null) yield put(systemActions.switchTab(tabs.allIds[currentTabIndex + 1]));
-		else if (tabs.allIds[currentTabIndex - 1] != null) yield put(systemActions.switchTab(tabs.allIds[currentTabIndex - 1]));
+	if (!isOnlyTab && tabId === activeTab) {
+		const currentTabIndex = tabsKeys.indexOf(`${tabId}`);
+		if (tabsKeys[currentTabIndex + 1] != null) yield put(systemActions.switchTab(tabsKeys[`${currentTabIndex + 1}`]));
+		else if (tabsKeys[currentTabIndex - 1] != null) yield put(systemActions.switchTab(tabsKeys[`${currentTabIndex - 1}`]));
 	}
 
 	let newTabId, newTab, newTaskId, newTask;
-	if (hasSingleTab) ({ newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask));
+	if (isOnlyTab) ({ newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask));
 
 	const updatedTabs = produce(tabs, draftTabs => {
-		delete draftTabs.byId[tabId];
-		draftTabs.allIds = tabs.allIds.filter(id => id !== tabId);
-		if (newTab) {
-			draftTabs.byId[newTabId] = newTab;
-			draftTabs.allIds.push(newTabId);
-		}
+		delete draftTabs[tabId];
+		if (newTab) draftTabs[newTabId] = newTab;
 	});
-
 	const updatedTasks = produce(tasks, draftTasks => {
-		tasksToRemove.map(id => delete draftTasks.byId[id]);
-		draftTasks.allIds = tasks.allIds.filter(id => !tasksToRemove.includes(id));
-		if (newTask) {
-			draftTasks.byId[newTaskId] = newTask;
-			draftTasks.allIds.push(newTaskId);
-		}
+		tasksToRemove.map(id => delete draftTasks[id]);
+		if (newTask) draftTasks[newTaskId] = newTask;
 	});
 
 	yield put(systemActions.removeTab({ tasks: updatedTasks, tabs: updatedTabs }));
@@ -146,8 +131,9 @@ function* removeTab({ payload: tabId }: Action<number>): Iterator<Effect> {
 
 function* updateTabTitle({ payload: { tabId, title } }: Action<{ tabId: number, title: string }>): Iterator<Effect> {
 	const { tabs } = yield select();
+	
 	const updatedTabs = produce(tabs, draftTabs => {
-		draftTabs.byId[tabId].title = title;
+		draftTabs[tabId].title = title;
 	});
 
 	yield put(systemActions.updateTabTitle(updatedTabs));

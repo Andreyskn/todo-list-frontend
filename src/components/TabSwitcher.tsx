@@ -18,9 +18,9 @@ export default class TabSwitcher extends React.Component<any, any> {
 
 		return (
 			<div style={{ display: 'flex', marginBottom: '20px' }} >
-				{tabs.allIds.map(tabId => (
-					<span key={tabId} style={{ display: 'flex', marginRight: '10px', borderBottom: tabId === activeTab && '3px solid red' }}>
-						<Button text={tabs.byId[tabId].title} onClick={() => this.switchTab(tabId)} />
+				{Object.keys(tabs).map(tabId => (
+					<span key={tabId} style={{ display: 'flex', marginRight: '10px', borderBottom: tabId == activeTab && '3px solid red' }}>
+						<Button text={tabs[tabId].title} onClick={() => this.switchTab(tabId)} />
 						<Button text='x' onClick={() => this.removeTab(tabId)} />
 					</span>
 				))}

@@ -8,8 +8,7 @@ export type Task = {
 }
 
 export type Tasks = {
-	byId: { [key: number]: Task },
-	allIds: number[],
+	[key: string]: Task,
 }
 
 export type Tab = {
@@ -19,8 +18,7 @@ export type Tab = {
 }
 
 export type Tabs = {
-	byId: { [key: number]: Tab },
-	allIds: number[],
+	[key: string]: Tab,
 }
 
 export type ApplicationState = {
@@ -32,44 +30,38 @@ export type ApplicationState = {
 const initialState: ApplicationState = {
 	activeTab: 0,
 	tabs: {
-		byId: {
-			0: {
-				id: 0,
-				title: 'Tab 1',
-				taskIds: [0],
-			},
-			1: {
-				id: 1,
-				title: 'Tab 2',
-				taskIds: [1],
-			},
-			2: {
-				id: 2,
-				title: 'Tab 3',
-				taskIds: [2],
-			}
+		'0': {
+			id: 0,
+			title: 'Tab 1',
+			taskIds: [0],
 		},
-		allIds: [0, 1, 2],
+		'1': {
+			id: 1,
+			title: 'Tab 2',
+			taskIds: [1],
+		},
+		'2': {
+			id: 2,
+			title: 'Tab 3',
+			taskIds: [2],
+		}
 	},
 	tasks: {
-		byId: {
-			0: {
-				id: 0,
-				title: 'Task from first tab',
-				done: false,
-			},
-			1: {
-				id: 1,
-				title: 'Task from second tab',
-				done: false,
-			},
-			2: {
-				id: 2,
-				title: 'Task from third tab',
-				done: false,
-			}
+		'0': {
+			id: 0,
+			title: 'Task from first tab',
+			done: false,
 		},
-		allIds: [0, 1, 2],
+		'1': {
+			id: 1,
+			title: 'Task from second tab',
+			done: false,
+		},
+		'2': {
+			id: 2,
+			title: 'Task from third tab',
+			done: false,
+		}
 	}
 }
 
