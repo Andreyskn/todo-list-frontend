@@ -1,17 +1,37 @@
 import React, { FocusEvent } from 'react';
-import { Button, Checkbox, Textarea } from './base-ui';
+import { Button, Checkbox, Input } from './base-ui';
+import styled from 'styled-components';
 
 interface TaskProps {
-	title: string,
-	done: boolean,
+	title: string;
+	done: boolean;
 	removeTask: () => any;
 	toggleTask: () => any;
 	updateTaskTitle: (e: FocusEvent<Element>) => any;
 }
 
 interface TaskState {
-	title: string,
+	title: string;
 }
+
+const Container = styled.div`
+	display: inline-flex;
+	align-items: center;
+	padding: 10px;
+
+	& + & {
+		margin-top: 5px;
+	}
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+	display: flex;
+	margin-right: 5px;
+`;
+
+const StyledDelButton = styled(Button)`
+	margin-left: 5px;
+`;
 
 export default class Task extends React.Component<TaskProps, TaskState> {
 	state = {
@@ -27,11 +47,11 @@ export default class Task extends React.Component<TaskProps, TaskState> {
 		const { title } = this.state;
 
 		return (
-			<div style={{ display: 'flex' }}>
-				<Checkbox checked={done} onChange={toggleTask} />
-				<Textarea text={title} onChange={e => this.onChange(e)} onBlur={updateTaskTitle} />
-				<Button text={'x'} onClick={removeTask} />
-			</div>
+			<Container>
+				<StyledCheckbox checked={done} onChange={toggleTask} />
+				<Input text={title} onChange={e => this.onChange(e)} onBlur={updateTaskTitle} />
+				<StyledDelButton text={'×'} onClick={removeTask} />
+			</Container>
 		)
 	}
 }

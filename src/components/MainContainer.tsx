@@ -4,10 +4,17 @@ import Tab from './Tab';
 import TabSwitcher from './TabSwitcher';
 import { ApplicationState } from '../store/reducer';
 import { Button } from './base-ui';
+import styled from 'styled-components';
 
 interface MainContainerProps extends ApplicationState {
-	dispatch: Dispatch,
+	dispatch: Dispatch;
 }
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`
 
 export default class MainContainer extends React.Component<MainContainerProps, {}> {
 
@@ -20,7 +27,7 @@ export default class MainContainer extends React.Component<MainContainerProps, {
 		const activeTasks = tabToRender.taskIds.map(taskId => tasks[taskId]);
 
 		return (
-			<div style={{paddingLeft: '500px', paddingTop: '30px'}}>
+			<Container>
 				<Button text='Save' onClick={() => {}} /><br/>
 				<TabSwitcher dispatch={dispatch} tabs={tabs} activeTab={activeTab} />
 				<Tab 
@@ -29,7 +36,7 @@ export default class MainContainer extends React.Component<MainContainerProps, {
 					tasks={activeTasks}
 					dispatch={dispatch}
 				/>
-			</div>
+			</Container>
 		)
 	}
 }

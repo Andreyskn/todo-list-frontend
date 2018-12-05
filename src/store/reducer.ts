@@ -2,7 +2,7 @@ import { systemActionTypes } from './actions';
 import { Reducer } from 'redux';
 
 export type Task = {
-	id: number,
+	id: string,
 	title: string,
 	done: boolean,
 }
@@ -12,9 +12,9 @@ export type Tasks = {
 }
 
 export type Tab = {
-	id: number,
+	id: string,
 	title: string,
-	taskIds: number[],
+	taskIds: string[],
 }
 
 export type Tabs = {
@@ -22,43 +22,43 @@ export type Tabs = {
 }
 
 export type ApplicationState = {
-	activeTab: number,
+	activeTab: string,
 	tabs: Tabs,
 	tasks: Tasks,
 };
 
 const initialState: ApplicationState = {
-	activeTab: 0,
+	activeTab: '0',
 	tabs: {
 		'0': {
-			id: 0,
+			id: '0',
 			title: 'Tab 1',
-			taskIds: [0],
+			taskIds: ['0'],
 		},
 		'1': {
-			id: 1,
+			id: '1',
 			title: 'Tab 2',
-			taskIds: [1],
+			taskIds: ['1'],
 		},
 		'2': {
-			id: 2,
+			id: '2',
 			title: 'Tab 3',
-			taskIds: [2],
+			taskIds: ['2'],
 		}
 	},
 	tasks: {
 		'0': {
-			id: 0,
+			id: '0',
 			title: 'Task from first tab',
 			done: false,
 		},
 		'1': {
-			id: 1,
+			id: '1',
 			title: 'Task from second tab',
 			done: false,
 		},
 		'2': {
-			id: 2,
+			id: '2',
 			title: 'Task from third tab',
 			done: false,
 		}

@@ -1,14 +1,15 @@
 import React, { ReactElement } from 'react';
 
 interface ButtonProps {
-	text: string,
-	onClick: () => any,
+	className?: string;
+	text: string;
+	onClick: () => any;
 }
 
-export function Button(props: ButtonProps): ReactElement<ButtonProps> {
+export function Button({ className, text, onClick }: ButtonProps): ReactElement<ButtonProps> {
 	return (
-		<div>
-			<button onClick={props.onClick}>{props.text}</button>
+		<div className={className}>
+			<button onClick={onClick}>{text}</button>
 		</div>
 	)
 }

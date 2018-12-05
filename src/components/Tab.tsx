@@ -6,31 +6,31 @@ import TaskList from './TaskList';
 import { facadeActions } from '../store/actions';
 
 interface TabProps {
-	dispatch: Dispatch,
-	title: string,
-	tabId: number,
-	tasks: Task[],
+	dispatch: Dispatch;
+	title: string;
+	tabId: string;
+	tasks: Task[];
 }
 
 interface TabState {
-	renameMode: boolean,
+	renamingMode: boolean;
 }
 
 export default class Tab extends React.Component<TabProps, TabState> {
 
 	state = {
-		renameMode: false,
+		renamingMode: false,
 	}
 
-	addTask = (tabId: number) => () => this.props.dispatch(facadeActions.addTask(tabId));
+	addTask = (tabId: string) => () => this.props.dispatch(facadeActions.addTask(tabId));
 
-	removeTask = (tabId: number) => (taskId: number) => () => this.props.dispatch(facadeActions.removeTask(tabId, taskId));
+	removeTask = (tabId: string) => (taskId: string) => () => this.props.dispatch(facadeActions.removeTask(tabId, taskId));
 
-	setRenameMode = (renameMode: boolean) => this.setState({ renameMode });
+	setRenameMode = (renamingMode: boolean) => this.setState({ renamingMode });
 
 	renameTab = (e) => {
 		const { tabId, dispatch } = this.props;
-		const newTitle = e.target.value;
+		const newTitle = e.target.value.trim();
 		dispatch(facadeActions.updateTabTitle(tabId, newTitle));
 		this.setRenameMode(false);
 	};
@@ -39,12 +39,12 @@ export default class Tab extends React.Component<TabProps, TabState> {
 
 	render() {
 		const { title, tabId, tasks, dispatch } = this.props;
-		const { renameMode } = this.state;
+		const { renamingMode } = this.state;
 
 		return (
 			<div>
 				<Button text='Rename' onClick={() => this.setRenameMode(true)} />
-				{renameMode ? <input type='text' autoFocus defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress}/> : <span>{title}</span>}
+				{renamingMode ? <input type='text' autoFocus defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress}/> : <span>{title}</span>}
 				<TaskList tasks={tasks} dispatch={dispatch} addTask={this.addTask(tabId)} removeTask={this.removeTask(tabId)} />
 			</div>
 		)

@@ -4,13 +4,26 @@ import { Task as TaskType } from '../store/reducer';
 import Task from './Task';
 import { Button } from './base-ui';
 import { facadeActions } from '../store/actions';
+import styled from 'styled-components';
 
 interface TaskListProps {
-	dispatch: Dispatch,
-	tasks: TaskType[],
-	addTask: () => any,
-	removeTask: (taskId: number) => any,
+	dispatch: Dispatch;
+	tasks: TaskType[];
+	addTask: () => any;
+	removeTask: (taskId: string) => any;
 }
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	position: relative;
+`;
+
+const StyledAddButton = styled(Button)`
+	position: absolute;
+	top: 0;
+	left: calc(100% + 15px);
+`;
 
 export default class TaskList extends React.Component<TaskListProps, {}> {
 
@@ -22,7 +35,7 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
 		const { tasks, addTask, removeTask } = this.props;
 
 		return (
-			<div>
+			<Container>
 				{tasks.map(t => 
 					<Task
 						key={t.id}
@@ -33,8 +46,8 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
 						updateTaskTitle={this.updateTaskTitle(t.id)}
 					/>
 				)}
-				<Button text='Add' onClick={addTask} />
-			</div>
+				<StyledAddButton text='Add Task' onClick={addTask} />
+			</Container>
 		)
 	}
 }
