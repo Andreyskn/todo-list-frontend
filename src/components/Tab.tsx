@@ -44,7 +44,7 @@ export default class Tab extends React.Component<TabProps, TabState> {
 			<div>
 				<Button text='Rename' onClick={() => this.setRenameMode(true)} />
 				{renamingMode ? (
-					<input type='text' autoFocus defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress} />
+					<input type='text' autoFocus={true} defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress} />
 				) : (
 					<span>{title}</span>
 				)}

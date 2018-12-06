@@ -16,6 +16,10 @@ const Container = styled.div`
 	align-items: center;
 `;
 
+const noop = () => {
+	return;
+};
+
 export default class MainContainer extends React.Component<MainContainerProps, {}> {
 	render() {
 		const { activeTab, tabs, tasks, dispatch } = this.props;
@@ -27,7 +31,7 @@ export default class MainContainer extends React.Component<MainContainerProps, {
 
 		return (
 			<Container>
-				<Button text='Save' onClick={() => {}} />
+				<Button text='Save' onClick={noop} />
 				<br />
 				<TabSwitcher dispatch={dispatch} tabs={tabs} activeTab={activeTab} />
 				<Tab tabId={tabToRender.id} title={tabToRender.title} tasks={activeTasks} dispatch={dispatch} />

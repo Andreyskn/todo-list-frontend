@@ -19,11 +19,11 @@ const createNewTask = (id: string): Task => ({ id, title: '', done: false });
 const createNewTab = (id: string, taskId: string): Tab => ({ id, title: freshTabTitle, taskIds: [taskId] });
 
 function* getNewTabWithTask() {
-	const { tabs, tasks } = yield select(),
-		newTaskId = yield call(generateId, Object.keys(tasks)),
-		newTask = yield call(createNewTask, newTaskId),
-		newTabId = yield call(generateId, Object.keys(tabs)),
-		newTab = yield call(createNewTab, newTabId, newTaskId);
+	const { tabs, tasks } = yield select();
+	const newTaskId = yield call(generateId, Object.keys(tasks));
+	const newTask = yield call(createNewTask, newTaskId);
+	const newTabId = yield call(generateId, Object.keys(tabs));
+	const newTab = yield call(createNewTab, newTabId, newTaskId);
 	return { newTaskId, newTask, newTabId, newTab };
 }
 
@@ -49,7 +49,8 @@ function* removeTask({ payload: { tabId, taskId } }: Action<{ tabId: string; tas
 
 	if (hasSingleTask && !taskToRemove.title && !taskToRemove.done) return;
 
-	let newTaskId, newTask;
+	let newTaskId;
+	let newTask;
 	if (hasSingleTask) {
 		newTaskId = yield call(generateId, Object.keys(tasks));
 		newTask = yield call(createNewTask, newTaskId);
@@ -117,7 +118,11 @@ function* removeTab({ payload: tabId }: Action<string>): Iterator<Effect> {
 		else if (tabsKeys[currentTabIndex - 1] != null) yield put(systemActions.switchTab(tabsKeys[currentTabIndex - 1]));
 	}
 
-	let newTabId, newTab, newTaskId, newTask;
+	let newTabId;
+	let newTab;
+	let newTaskId;
+	let newTask;
+
 	if (isOnlyTab) ({ newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask));
 
 	const updatedTabs = produce(tabs, (draftTabs) => {
