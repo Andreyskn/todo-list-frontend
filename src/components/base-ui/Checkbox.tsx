@@ -15,7 +15,7 @@ const StyledCheckbox = styled.input`
 export function Checkbox({ className, checked, onChange }: CheckboxProps): ReactElement<CheckboxProps> {
 	return (
 		<div className={className}>
-			<StyledCheckbox type="checkbox" checked={checked} onChange={onChange} />
+			<StyledCheckbox type='checkbox' checked={checked} onChange={onChange} />
 		</div>
-	)
+	);
 }

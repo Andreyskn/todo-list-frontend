@@ -2,29 +2,29 @@ import { systemActionTypes } from './actions';
 import { Reducer } from 'redux';
 
 export type Task = {
-	id: string,
-	title: string,
-	done: boolean,
-}
+	id: string;
+	title: string;
+	done: boolean;
+};
 
 export type Tasks = {
-	[key: string]: Task,
-}
+	[key: string]: Task;
+};
 
 export type Tab = {
-	id: string,
-	title: string,
-	taskIds: string[],
-}
+	id: string;
+	title: string;
+	taskIds: string[];
+};
 
 export type Tabs = {
-	[key: string]: Tab,
-}
+	[key: string]: Tab;
+};
 
 export type ApplicationState = {
-	activeTab: string,
-	tabs: Tabs,
-	tasks: Tasks,
+	activeTab: string;
+	tabs: Tabs;
+	tasks: Tasks;
 };
 
 const initialState: ApplicationState = {
@@ -44,7 +44,7 @@ const initialState: ApplicationState = {
 			id: '2',
 			title: 'Tab 3',
 			taskIds: ['2'],
-		}
+		},
 	},
 	tasks: {
 		'0': {
@@ -61,9 +61,9 @@ const initialState: ApplicationState = {
 			id: '2',
 			title: 'Task from third tab',
 			done: false,
-		}
-	}
-}
+		},
+	},
+};
 
 export const reducer: Reducer<ApplicationState> = (state = initialState, { type, payload }) => {
 	switch (type) {
@@ -80,4 +80,4 @@ export const reducer: Reducer<ApplicationState> = (state = initialState, { type,
 		default:
 			return state;
 	}
-}
+};

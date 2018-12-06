@@ -36,11 +36,11 @@ const StyledDelButton = styled(Button)`
 export default class Task extends React.Component<TaskProps, TaskState> {
 	state = {
 		title: this.props.title,
-	}
+	};
 
 	onChange = (e: any) => {
 		this.setState({ title: e.target.value });
-	}
+	};
 
 	render() {
 		const { done, removeTask, toggleTask, updateTaskTitle } = this.props;
@@ -49,9 +49,9 @@ export default class Task extends React.Component<TaskProps, TaskState> {
 		return (
 			<Container>
 				<StyledCheckbox checked={done} onChange={toggleTask} />
-				<Input text={title} onChange={e => this.onChange(e)} onBlur={updateTaskTitle} />
+				<Input text={title} onChange={(e) => this.onChange(e)} onBlur={updateTaskTitle} />
 				<StyledDelButton text={'×'} onClick={removeTask} />
 			</Container>
-		)
+		);
 	}
 }

@@ -6,6 +6,12 @@ import { saga } from './saga';
 const sagaMiddleware = createSagaMiddleware();
 const devToolsExt = (window as any).devToolsExtension && (window as any).devToolsExtension();
 
-export default createStore(reducer, compose(applyMiddleware(sagaMiddleware), devToolsExt));
+export default createStore(
+	reducer,
+	compose(
+		applyMiddleware(sagaMiddleware),
+		devToolsExt
+	)
+);
 
 sagaMiddleware.run(saga);

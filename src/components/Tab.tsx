@@ -17,10 +17,9 @@ interface TabState {
 }
 
 export default class Tab extends React.Component<TabProps, TabState> {
-
 	state = {
 		renamingMode: false,
-	}
+	};
 
 	addTask = (tabId: string) => () => this.props.dispatch(facadeActions.addTask(tabId));
 
@@ -44,9 +43,13 @@ export default class Tab extends React.Component<TabProps, TabState> {
 		return (
 			<div>
 				<Button text='Rename' onClick={() => this.setRenameMode(true)} />
-				{renamingMode ? <input type='text' autoFocus defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress}/> : <span>{title}</span>}
+				{renamingMode ? (
+					<input type='text' autoFocus defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress} />
+				) : (
+					<span>{title}</span>
+				)}
 				<TaskList tasks={tasks} dispatch={dispatch} addTask={this.addTask(tabId)} removeTask={this.removeTask(tabId)} />
 			</div>
-		)
+		);
 	}
 }

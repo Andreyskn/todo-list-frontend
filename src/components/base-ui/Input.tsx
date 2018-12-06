@@ -8,5 +8,5 @@ interface InputProps {
 }
 
 export function Input({ className, text, onChange, onBlur }: InputProps): ReactElement<InputProps> {
-	return <input type='text' className={className} value={text} onChange={onChange} onBlur={e => onBlur(e)} />
+	return <input type='text' className={className} value={text} onChange={onChange} onBlur={(e) => onBlur(e)} />;
 }

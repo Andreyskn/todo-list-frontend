@@ -11,5 +11,5 @@ export function Button({ className, text, onClick }: ButtonProps): ReactElement<
 		<div className={className}>
 			<button onClick={onClick}>{text}</button>
 		</div>
-	)
+	);
 }

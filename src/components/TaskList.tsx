@@ -26,7 +26,6 @@ const StyledAddButton = styled(Button)`
 `;
 
 export default class TaskList extends React.Component<TaskListProps, {}> {
-
 	toggleTask = (id) => () => this.props.dispatch(facadeActions.toggleTask(id));
 
 	updateTaskTitle = (id) => (e) => this.props.dispatch(facadeActions.updateTaskTitle(id, e.target.value));
@@ -36,7 +35,7 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
 
 		return (
 			<Container>
-				{tasks.map(t => 
+				{tasks.map((t) => (
 					<Task
 						key={t.id}
 						title={t.title}
@@ -45,9 +44,9 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
 						toggleTask={this.toggleTask(t.id)}
 						updateTaskTitle={this.updateTaskTitle(t.id)}
 					/>
-				)}
+				))}
 				<StyledAddButton text='Add Task' onClick={addTask} />
 			</Container>
-		)
+		);
 	}
 }

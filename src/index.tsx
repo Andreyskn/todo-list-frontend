@@ -8,10 +8,9 @@ import { Normalize } from 'styled-normalize';
 
 const connected = {
 	MainContainer: connect((state: ApplicationState) => state)(MainContainer),
-}
+};
 
 class App extends React.Component<{}, {}> {
-
 	render() {
 		return (
 			<React.Fragment>
@@ -20,7 +19,7 @@ class App extends React.Component<{}, {}> {
 					<connected.MainContainer />
 				</Provider>
 			</React.Fragment>
-		)
+		);
 	}
 }
 
