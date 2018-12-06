@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "webpack-dev-server --mode development --hot",
 		"build": "webpack --mode production",
-		"comb": "prettier --write \"src/**/*.{ts,tsx}\""
+		"comb": "prettier --write \"src/**/*.{ts,tsx}\"",
+		"lint": "node node_modules/tslint/bin/tslint \"src/**/*.{ts,tsx}\""
 	},
 	"devDependencies": {
 		"@babel/core": "^7.1.2",
@@ -28,6 +29,10 @@
 		"prettier": "^1.15.3",
 		"source-map-loader": "^0.2.4",
 		"style-loader": "^0.23.1",
+		"tslint": "^5.11.0",
+		"tslint-config-airbnb": "^5.11.1",
+		"tslint-config-prettier": "^1.17.0",
+		"tslint-react": "^3.6.0",
 		"typescript": "^3.1.6",
 		"webpack": "^4.23.1",
 		"webpack-cli": "^3.1.2",
