@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import { Task as TaskType } from '../store/reducer';
-import Task from './Task';
+import { Task } from './Task';
 import { Button } from './base-ui';
 import { facadeActions } from '../store/actions';
 import styled from 'styled-components';

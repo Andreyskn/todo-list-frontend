@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+
+import { Component } from './styled';
 
 interface CheckboxProps {
 	className?: string;
@@ -7,15 +8,10 @@ interface CheckboxProps {
 	onChange: () => any;
 }
 
-const StyledCheckbox = styled.input`
-	width: 24px;
-	height: 24px;
-`;
-
 export function Checkbox({ className, checked, onChange }: CheckboxProps): ReactElement<CheckboxProps> {
 	return (
-		<div className={className}>
-			<StyledCheckbox type='checkbox' checked={checked} onChange={onChange} />
-		</div>
+		<Component>
+			<Component.Checkbox type='checkbox' checked={checked} onChange={onChange} />
+		</Component>
 	);
 }
