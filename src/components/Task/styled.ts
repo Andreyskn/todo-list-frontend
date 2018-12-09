@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Task__ = styled.div`
+export const Task__ = styled.div`
 	display: inline-flex;
 	align-items: center;
 	padding: 10px;
@@ -9,5 +9,3 @@ const Task__ = styled.div`
 		margin-top: 5px;
 	}
 `;
-
-export { Task__ };

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const TabSwitchButton__ = styled.div`
+export const TabSwitchButton__ = styled.div`
 	display: flex;
 	margin-right: 5px;
 	width: 200px;
@@ -38,5 +38,3 @@ const TabSwitchButton__ = styled.div`
 		);
 	}}
 `;
-
-export { TabSwitchButton__ };

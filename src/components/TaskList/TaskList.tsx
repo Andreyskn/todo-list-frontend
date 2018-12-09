@@ -1,10 +1,10 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { Task as TaskType } from '../store/reducer';
-import { Task } from './Task';
-import { Button } from './base-ui';
-import { facadeActions } from '../store/actions';
-import styled from 'styled-components';
+import { Task as TaskType } from '../../store/reducer';
+import { Task } from '../Task';
+import { Button } from '../base-ui';
+import { facadeActions } from '../../store/actions';
+import { TaskList__ } from './styled';
 
 interface TaskListProps {
 	dispatch: Dispatch;
@@ -13,19 +13,7 @@ interface TaskListProps {
 	removeTask: (taskId: string) => any;
 }
 
-const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	position: relative;
-`;
-
-const StyledAddButton = styled(Button)`
-	position: absolute;
-	top: 0;
-	left: calc(100% + 15px);
-`;
-
-export default class TaskList extends React.Component<TaskListProps, {}> {
+export class TaskList extends React.Component<TaskListProps, {}> {
 	toggleTask = (id) => () => this.props.dispatch(facadeActions.toggleTask(id));
 
 	updateTaskTitle = (id) => (e) => this.props.dispatch(facadeActions.updateTaskTitle(id, e.target.value));
@@ -34,7 +22,7 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
 		const { tasks, addTask, removeTask } = this.props;
 
 		return (
-			<Container>
+			<TaskList__>
 				{tasks.map((t) => (
 					<Task
 						key={t.id}
@@ -45,8 +33,8 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
 						updateTaskTitle={this.updateTaskTitle(t.id)}
 					/>
 				))}
-				<StyledAddButton text='Add Task' onClick={addTask} />
-			</Container>
+				<Button text='Add Task' onClick={addTask} />
+			</TaskList__>
 		);
 	}
 }

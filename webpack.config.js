@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require('path');
 
 const htmlPlugin = new HtmlWebPackPlugin({
 	template: "./src/index.html",
@@ -8,7 +9,10 @@ const htmlPlugin = new HtmlWebPackPlugin({
 module.exports = {
 	devtool: 'source-map',
 	resolve: {
-		extensions: ['.ts', '.tsx', '.js', '.jsx', '.css']
+		extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
+		alias: {
+			Icons: path.resolve(__dirname, 'src/assets/icons')
+		}
 	},
 	module: {
 		rules: [
@@ -26,6 +30,11 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: ["style-loader", "css-loader"]
+			},
+			{
+				test: /\.svg$/,
+				exclude: /node_modules/,
+				loader: 'svg-react-loader'
 			}
 		]
 	},

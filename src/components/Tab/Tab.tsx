@@ -1,9 +1,11 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { Task } from '../store/reducer';
-import { Button } from './base-ui';
-import TaskList from './TaskList';
-import { facadeActions } from '../store/actions';
+import { Task } from '../../store/reducer';
+import { Button, Input } from '../base-ui';
+import { TaskList } from '../TaskList';
+import { facadeActions } from '../../store/actions';
+
+import { Tab__ } from './styled';
 
 interface TabProps {
 	dispatch: Dispatch;
@@ -16,7 +18,7 @@ interface TabState {
 	renamingMode: boolean;
 }
 
-export default class Tab extends React.Component<TabProps, TabState> {
+export class Tab extends React.Component<TabProps, TabState> {
 	state = {
 		renamingMode: false,
 	};
@@ -41,15 +43,18 @@ export default class Tab extends React.Component<TabProps, TabState> {
 		const { renamingMode } = this.state;
 
 		return (
-			<div>
-				<Button text='Rename' onClick={() => this.setRenameMode(true)} />
-				{renamingMode ? (
-					<input type='text' autoFocus={true} defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress} />
-				) : (
-					<span>{title}</span>
-				)}
+			<Tab__>
+				<Tab__.Header>
+					<Button onClick={() => this.setRenameMode(true)} icon={'edit'} />
+					{renamingMode ? (
+						// TODO: Change to base-ui/Input
+						<Tab__.Input type='text' autoFocus={true} defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress} />
+					) : (
+						<Tab__.Title>{title}</Tab__.Title>
+					)}
+				</Tab__.Header>
 				<TaskList tasks={tasks} dispatch={dispatch} addTask={this.addTask(tabId)} removeTask={this.removeTask(tabId)} />
-			</div>
+			</Tab__>
 		);
 	}
 }

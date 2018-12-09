@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 
-import Tab from '../Tab';
+import { Tab } from '../Tab';
 import { TabSwitchPanel } from '../TabSwitchPanel';
 import { Button } from '../base-ui';
 

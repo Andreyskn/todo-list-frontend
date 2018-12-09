@@ -8,6 +8,11 @@ export const Button__ = styled.div`
 
 const Button = styled.button`
 	outline: none;
+	cursor: pointer;
+
+	& > svg {
+		width: 20px;
+	}
 
 	${({ modifier }) => modifier && applyButtonModifier(modifier)}
 `;
@@ -87,5 +92,3 @@ const applyButtonModifier = (modifier) => {
 
 Button__.Button = Button;
 Button__.Span = Span;
-
-// export { Button__ };

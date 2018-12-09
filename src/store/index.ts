@@ -4,7 +4,7 @@ import { reducer } from './reducer';
 import { saga } from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
-const devToolsExt = (window as any).window.__REDUX_DEVTOOLS_EXTENSION__ && (window as any).window.__REDUX_DEVTOOLS_EXTENSION__();
+const devToolsExt = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 
 export default createStore(
 	reducer,
