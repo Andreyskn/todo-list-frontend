@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const Component = styled.input`
+const Input__ = styled.input`
 	/* color: red; */
 `;
 
-export { Component };
+export { Input__ };

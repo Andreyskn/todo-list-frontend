@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Component = styled.div`
+const Checkbox__ = styled.div`
 	display: flex;
 	margin-right: 5px;
 `;
@@ -10,6 +10,6 @@ const Checkbox = styled.input`
 	height: 24px;
 `;
 
-Component.Checkbox = Checkbox;
+Checkbox__.Checkbox = Checkbox;
 
-export { Component };
+export { Checkbox__ };

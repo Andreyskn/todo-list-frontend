@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import store from './store';
 import { ApplicationState } from './store/reducer';
-import MainContainer from './components/MainContainer';
+import { MainContainer } from './components/MainContainer';
 import { Normalize } from 'styled-normalize';
 
 const connected = {

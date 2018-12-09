@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Task__ = styled.div`
 	display: inline-flex;
 	align-items: center;
 	padding: 10px;
@@ -10,4 +10,4 @@ const Wrapper = styled.div`
 	}
 `;
 
-export { Wrapper };
+export { Task__ };

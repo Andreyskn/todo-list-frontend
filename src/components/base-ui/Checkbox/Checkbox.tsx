@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { Component } from './styled';
+import { Checkbox__ } from './styled';
 
 interface CheckboxProps {
 	className?: string;
@@ -10,8 +10,8 @@ interface CheckboxProps {
 
 export function Checkbox({ className, checked, onChange }: CheckboxProps): ReactElement<CheckboxProps> {
 	return (
-		<Component>
-			<Component.Checkbox type='checkbox' checked={checked} onChange={onChange} />
-		</Component>
+		<Checkbox__>
+			<Checkbox__.Checkbox type='checkbox' checked={checked} onChange={onChange} />
+		</Checkbox__>
 	);
 }

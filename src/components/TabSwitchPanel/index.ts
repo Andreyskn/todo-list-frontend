@@ -1,0 +1,1 @@
+export { TabSwitchPanel } from './TabSwitchPanel';

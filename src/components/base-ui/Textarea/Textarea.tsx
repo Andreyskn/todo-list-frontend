@@ -1,6 +1,6 @@
 import React, { ReactElement, FocusEvent } from 'react';
 
-import { Component } from './styled';
+import { Textarea__ } from './styled';
 
 interface TextareaProps {
 	className?: string;
@@ -10,5 +10,5 @@ interface TextareaProps {
 }
 
 export function Textarea({ className, text, onChange, onBlur }: TextareaProps): ReactElement<TextareaProps> {
-	return <Component className={className} cols={30} rows={1} value={text} onChange={onChange} onBlur={(e) => onBlur(e)} />;
+	return <Textarea__ className={className} cols={30} rows={1} value={text} onChange={onChange} onBlur={(e) => onBlur(e)} />;
 }

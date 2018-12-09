@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const Component = styled.textarea`
+const Textarea__ = styled.textarea`
 	/* color: red; */
 `;
 
-export { Component };
+export { Textarea__ };

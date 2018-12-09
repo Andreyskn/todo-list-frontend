@@ -1,6 +1,6 @@
 import React, { ReactElement, FocusEvent } from 'react';
 
-import { Component } from './styled';
+import { Input__ } from './styled';
 
 interface InputProps {
 	className?: string;
@@ -10,5 +10,5 @@ interface InputProps {
 }
 
 export function Input({ className, text, onChange, onBlur }: InputProps): ReactElement<InputProps> {
-	return <Component type='text' className={className} value={text} onChange={onChange} onBlur={(e) => onBlur(e)} />;
+	return <Input__ type='text' className={className} value={text} onChange={onChange} onBlur={(e) => onBlur(e)} />;
 }

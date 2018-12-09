@@ -1,7 +1,8 @@
 import React, { FocusEvent } from 'react';
 
-import { Wrapper } from './styled';
 import { Button, Checkbox, Input } from '../base-ui';
+
+import { Task__ } from './styled';
 
 interface TaskProps {
 	title: string;
@@ -29,11 +30,11 @@ export class Task extends React.Component<TaskProps, TaskState> {
 		const { title } = this.state;
 
 		return (
-			<Wrapper>
+			<Task__>
 				<Checkbox checked={done} onChange={toggleTask} />
 				<Input text={title} onChange={(e) => this.onChange(e)} onBlur={updateTaskTitle} />
 				<Button text={'×'} onClick={removeTask} styleMode={'spaced'} />
-			</Wrapper>
+			</Task__>
 		);
 	}
 }
