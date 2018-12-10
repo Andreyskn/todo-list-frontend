@@ -36,7 +36,10 @@ export class Tab extends React.Component<TabProps, TabState> {
 		this.setRenameMode(false);
 	};
 
-	onEnterPress = (e) => e.charCode === 13 && this.renameTab(e);
+	onKeyUp = (e) => {
+		e.keyCode === 13 && this.renameTab(e);
+		e.keyCode === 27 && this.setRenameMode(false);
+	};
 
 	render() {
 		const { title, tabId, tasks, dispatch } = this.props;
@@ -45,8 +48,9 @@ export class Tab extends React.Component<TabProps, TabState> {
 		return (
 			<Tab__>
 				<Tab__.Header>
-					{renamingMode ? ( // TODO: Change to base-ui/Input
-						<Tab__.Input type='text' autoFocus={true} defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress} />
+					{renamingMode ? (
+						// TODO: Change to base-ui/Input
+						<Tab__.Input type='text' autoFocus={true} defaultValue={title} onBlur={this.renameTab} onKeyUp={this.onKeyUp} />
 					) : (
 						<Tab__.Title>{title}</Tab__.Title>
 					)}

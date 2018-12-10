@@ -7,7 +7,13 @@
 		"dev": "webpack-dev-server --mode development --hot",
 		"build": "webpack --mode production",
 		"comb": "prettier --write \"src/**/*.{ts,tsx}\"",
-		"lint": "node node_modules/tslint/bin/tslint \"src/**/*.{ts,tsx}\""
+		"lint": "node node_modules/tslint/bin/tslint \"src/**/*.{ts,tsx}\"",
+		"comb-commit": "prettier --print-width 120 --tab-width 2 --use-tabs false --write \"src/**/*.{ts,tsx}\""
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn comb-commit"
+		}
 	},
 	"devDependencies": {
 		"@babel/core": "^7.1.2",
@@ -22,10 +28,12 @@
 		"@types/react-redux": "^6.0.9",
 		"@types/webpack": "^4.4.17",
 		"@types/webpack-env": "^1.13.6",
+		"awesome-typescript-loader": "^5.2.1",
 		"babel-loader": "^8.0.4",
 		"babel-plugin-styled-components": "^1.9.2",
 		"css-loader": "^1.0.0",
 		"html-webpack-plugin": "^3.2.0",
+		"husky": "^1.2.0",
 		"prettier": "^1.15.3",
 		"source-map-loader": "^0.2.4",
 		"style-loader": "^0.23.1",

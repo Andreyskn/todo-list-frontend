@@ -16,7 +16,11 @@ const generateId = (ids: string[]): string => `${Math.max(...ids.map((id) => par
 
 const createNewTask = (id: string): Task => ({ id, title: '', done: false });
 
-const createNewTab = (id: string, taskId: string): Tab => ({ id, title: freshTabTitle, taskIds: [taskId] });
+const createNewTab = (id: string, taskId: string): Tab => ({
+	id,
+	title: freshTabTitle,
+	taskIds: [taskId],
+});
 
 function* getNewTabWithTask() {
 	const { tabs, tasks } = yield select();
@@ -99,7 +103,13 @@ function* addTab(): Iterator<Effect> {
 		draftTasks[newTaskId] = newTask;
 	});
 
-	yield put(systemActions.addTab({ tasks: updatedTasks, tabs: updatedTabs, activeTab: newTabId }));
+	yield put(
+		systemActions.addTab({
+			tasks: updatedTasks,
+			tabs: updatedTabs,
+			activeTab: newTabId,
+		})
+	);
 }
 
 function* removeTab({ payload: tabId }: Action<string>): Iterator<Effect> {
