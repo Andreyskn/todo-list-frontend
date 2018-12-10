@@ -1,10 +1,10 @@
 declare module '*.svg' {
-	const content: any;
-	export default content;
+  const content: any;
+  export default content;
 }
 
 declare module 'Icons' {
-	const EditIcon: any;
-	const AddIcon: any;
-	export { EditIcon, AddIcon };
+  const EditIcon: any;
+  const AddIcon: any;
+  export { EditIcon, AddIcon };
 }

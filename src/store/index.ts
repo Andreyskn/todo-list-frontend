@@ -7,11 +7,11 @@ const sagaMiddleware = createSagaMiddleware();
 const devToolsExt = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 
 export default createStore(
-	reducer,
-	compose(
-		applyMiddleware(sagaMiddleware),
-		devToolsExt
-	)
+  reducer,
+  compose(
+    applyMiddleware(sagaMiddleware),
+    devToolsExt
+  )
 );
 
 sagaMiddleware.run(saga);

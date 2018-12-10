@@ -8,21 +8,21 @@ import { Normalize } from 'styled-normalize';
 import { GlobalStyle } from './styles';
 
 const connected = {
-	MainContainer: connect((state: ApplicationState) => state)(MainContainer),
+  MainContainer: connect((state: ApplicationState) => state)(MainContainer),
 };
 
 class App extends React.Component<{}, {}> {
-	render() {
-		return (
-			<React.Fragment>
-				<Normalize />
-				<GlobalStyle />
-				<Provider store={store}>
-					<connected.MainContainer />
-				</Provider>
-			</React.Fragment>
-		);
-	}
+  render() {
+    return (
+      <React.Fragment>
+        <Normalize />
+        <GlobalStyle />
+        <Provider store={store}>
+          <connected.MainContainer />
+        </Provider>
+      </React.Fragment>
+    );
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
