@@ -5,6 +5,7 @@ import store from './store';
 import { ApplicationState } from './store/reducer';
 import { MainContainer } from './components/MainContainer';
 import { Normalize } from 'styled-normalize';
+import { GlobalStyle } from './styles';
 
 const connected = {
 	MainContainer: connect((state: ApplicationState) => state)(MainContainer),
@@ -15,6 +16,7 @@ class App extends React.Component<{}, {}> {
 		return (
 			<React.Fragment>
 				<Normalize />
+				<GlobalStyle />
 				<Provider store={store}>
 					<connected.MainContainer />
 				</Provider>

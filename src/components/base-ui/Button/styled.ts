@@ -11,7 +11,7 @@ const Button = styled.button`
 	cursor: pointer;
 
 	& > svg {
-		width: 20px;
+		width: 16px;
 	}
 
 	${({ modifier }) => modifier && applyButtonModifier(modifier)}
@@ -58,6 +58,18 @@ const applyContainerModifier = (modifier) => {
 					background-color: #c3c3c354;
 				}
 			`;
+		case 'round':
+			return css`
+				position: absolute;
+				right: 10px;
+				top: 8px;
+			`;
+		case 'task-add':
+			return css`
+				position: fixed;
+				right: 18vw;
+				bottom: 16vh;
+			`;
 	}
 };
 
@@ -87,8 +99,44 @@ const applyButtonModifier = (modifier) => {
 				align-items: center;
 				color: #ffffff;
 			`;
+		case 'round':
+			return css`
+				${roundButtonStyles}
+			`;
+		case 'task-add':
+			return css`
+				${roundButtonStyles}
+
+				width: 70px;
+				height: 70px;
+
+				& > svg {
+					width: 30px;
+				}
+			`;
 	}
 };
+
+const roundButtonStyles = `
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background: linear-gradient(to top, #f7f7f7, #e7e7e7);
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+	border: none;
+
+	:hover {
+		background: #f5f5f5;
+	}
+
+	:active {
+		transform: translateY(1px);
+	}
+`;
 
 Button__.Button = Button;
 Button__.Span = Span;

@@ -8,13 +8,18 @@ export const Tab__ = styled.div`
 
 const Header = styled.div`
 	display: flex;
+	flex-shrink: 0;
 	align-items: center;
-	padding: 10px;
+	padding: 10px 60px;
 	font-size: 18px;
+	font-weight: bold;
+	height: 60px;
+	justify-content: center;
+	background: white;
+	position: relative;
 `;
 
 const Title = styled.span`
-	margin-left: 10px;
 	white-space: nowrap;
 	min-width: 0;
 	overflow: hidden;
@@ -23,11 +28,11 @@ const Title = styled.span`
 
 const Input = styled.input`
 	flex-grow: 1;
-	margin-left: 10px;
 	background: none;
-	border: none;
-	border-bottom: 1px solid #000;
+	border: 1px solid transparent;
+	border-bottom-color: #000;
 	outline: none;
+	text-align: center;
 `;
 
 Tab__.Header = Header;

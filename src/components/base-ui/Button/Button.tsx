@@ -2,17 +2,18 @@ import React, { ReactElement } from 'react';
 
 import { Button__ } from './styled';
 
-import { EditIcon } from 'Icons';
+import { EditIcon, AddIcon } from 'Icons';
 
 interface ButtonProps {
 	text?: string;
 	onClick: () => any;
-	styleMode?: 'spaced' | 'tab-switcher' | 'tab-close' | 'tab-add';
-	icon?: 'edit';
+	styleMode?: 'spaced' | 'tab-switcher' | 'tab-close' | 'tab-add' | 'round' | 'task-add';
+	icon?: 'edit' | 'add';
 }
 
 const icons = {
 	edit: <EditIcon />,
+	add: <AddIcon />,
 };
 
 export function Button({ text, onClick, styleMode, icon }: ButtonProps): ReactElement<ButtonProps> {

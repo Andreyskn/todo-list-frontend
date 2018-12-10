@@ -33,7 +33,7 @@ export class TaskList extends React.Component<TaskListProps, {}> {
 						updateTaskTitle={this.updateTaskTitle(t.id)}
 					/>
 				))}
-				<Button text='Add Task' onClick={addTask} />
+				<Button icon={'add'} onClick={addTask} styleMode={'task-add'} />
 			</TaskList__>
 		);
 	}

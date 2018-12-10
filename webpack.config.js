@@ -1,9 +1,9 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 const htmlPlugin = new HtmlWebPackPlugin({
-	template: "./src/index.html",
-	filename: "./index.html"
+	template: './src/index.html',
+	filename: './index.html',
 });
 
 module.exports = {
@@ -11,32 +11,32 @@ module.exports = {
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
 		alias: {
-			Icons: path.resolve(__dirname, 'src/assets/icons')
-		}
+			Icons: path.resolve(__dirname, 'src/assets/icons'),
+		},
 	},
 	module: {
 		rules: [
 			{
 				test: /\.(ts|tsx)$/,
 				exclude: /node_modules/,
-				loader: "babel-loader"
+				loader: 'babel-loader',
 			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				use: ["source-map-loader"],
-				enforce: "pre"
+				use: ['source-map-loader'],
+				enforce: 'pre',
 			},
 			{
 				test: /\.css$/,
-				use: ["style-loader", "css-loader"]
+				use: ['style-loader', 'css-loader'],
 			},
 			{
 				test: /\.svg$/,
 				exclude: /node_modules/,
-				loader: 'svg-react-loader'
-			}
-		]
+				loader: 'svg-react-loader',
+			},
+		],
 	},
-	plugins: [htmlPlugin]
+	plugins: [htmlPlugin],
 };

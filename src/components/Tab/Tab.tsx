@@ -45,13 +45,12 @@ export class Tab extends React.Component<TabProps, TabState> {
 		return (
 			<Tab__>
 				<Tab__.Header>
-					<Button onClick={() => this.setRenameMode(true)} icon={'edit'} />
-					{renamingMode ? (
-						// TODO: Change to base-ui/Input
+					{renamingMode ? ( // TODO: Change to base-ui/Input
 						<Tab__.Input type='text' autoFocus={true} defaultValue={title} onBlur={this.renameTab} onKeyPress={this.onEnterPress} />
 					) : (
 						<Tab__.Title>{title}</Tab__.Title>
 					)}
+					{!renamingMode && <Button onClick={() => this.setRenameMode(true)} icon={'edit'} styleMode={'round'} />}
 				</Tab__.Header>
 				<TaskList tasks={tasks} dispatch={dispatch} addTask={this.addTask(tabId)} removeTask={this.removeTask(tabId)} />
 			</Tab__>

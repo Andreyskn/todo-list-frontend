@@ -1,10 +1,7 @@
 {
-  	"extends": [
-		"tslint-react",
-		"tslint-config-standard",
-		"tslint-config-prettier"
-	],
-  	"rules": {
-		"jsx-no-lambda": false
- 	}
+	"extends": ["tslint-react", "tslint-config-standard", "tslint-config-prettier"],
+	"rules": {
+		"jsx-no-lambda": false,
+		"variable-name": [true, "ban-keywords", "check-format", "allow-trailing-underscore", "allow-pascal-case", "allow-snake-case"]
+	}
 }
