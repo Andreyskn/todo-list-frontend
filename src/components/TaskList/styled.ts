@@ -7,6 +7,7 @@ export const TaskList__ = styled.div`
   flex-grow: 1;
   position: relative;
   overflow: auto;
+  padding: 20px;
 `;
 
 const NewTaskButton = styled.button`

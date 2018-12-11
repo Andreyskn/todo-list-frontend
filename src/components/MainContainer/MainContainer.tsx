@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { Tab } from '../Tab';
 import { TabSwitchPanel } from '../TabSwitchPanel';
-import { Button } from '../base-ui';
+import { BottomPanel } from '../BottomPanel';
 
 import { ApplicationState } from '../../store/reducer';
 import { MainContainer__ } from './styled';
@@ -11,10 +11,6 @@ import { MainContainer__ } from './styled';
 interface MainContainerProps extends ApplicationState {
   dispatch: Dispatch;
 }
-
-const noop = () => {
-  return;
-};
 
 export class MainContainer extends React.Component<MainContainerProps, {}> {
   render() {
@@ -27,10 +23,9 @@ export class MainContainer extends React.Component<MainContainerProps, {}> {
 
     return (
       <MainContainer__>
-        {/* <Button text='Save' onClick={noop} />
-				<br /> */}
         <TabSwitchPanel dispatch={dispatch} tabs={tabs} activeTab={activeTab} />
         <Tab tabId={tabToRender.id} title={tabToRender.title} tasks={activeTasks} dispatch={dispatch} />
+        <BottomPanel />
       </MainContainer__>
     );
   }

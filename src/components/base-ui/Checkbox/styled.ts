@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Checkbox__ = styled.div`
   display: flex;
-  margin-right: 5px;
 `;
 
 const Checkbox = styled.input`

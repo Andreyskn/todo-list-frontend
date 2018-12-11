@@ -14,7 +14,7 @@ const freshTabTitle = 'New tab';
 
 const generateId = (ids: string[]): string => `${Math.max(...ids.map((id) => parseInt(id, 10))) + 1}`;
 
-const createNewTask = (id: string): Task => ({ id, title: '', done: false });
+const createNewTask = (id: string): Task => ({ id, title: id, done: false });
 
 const createNewTab = (id: string, taskId: string): Tab => ({
   id,

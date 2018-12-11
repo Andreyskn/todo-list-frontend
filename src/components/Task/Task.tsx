@@ -33,7 +33,7 @@ export class Task extends React.Component<TaskProps, TaskState> {
       <Task__>
         <Checkbox checked={done} onChange={toggleTask} />
         <Input text={title} onChange={(e) => this.onChange(e)} onBlur={updateTaskTitle} />
-        <Button text={'×'} onClick={removeTask} styleMode={'spaced'} />
+        <Button icon='cross' onClick={removeTask} styleMode={'remove'} />
       </Task__>
     );
   }
