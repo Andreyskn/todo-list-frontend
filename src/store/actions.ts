@@ -1,6 +1,7 @@
-import { Tasks, Tabs } from './reducer';
+import { Tasks, Tabs, ApplicationState } from './reducer';
 
 export const systemActionTypes = {
+  INIT: '🔥 INIT',
   ADD_TASK: '🚀 ADD_TASK',
   REMOVE_TASK: '🚀 REMOVE_TASK',
   TOGGLE_TASK: '🚀 TOGGLE_TASK',
@@ -22,6 +23,7 @@ export const facadeActionTypes = {
 };
 
 export const systemActions = {
+  init: (data: ApplicationState) => ({ type: systemActionTypes.INIT, payload: data }),
   addTask: (changeSet: { tasks: Tasks; tabs: Tabs }) => ({
     type: systemActionTypes.ADD_TASK,
     payload: changeSet,

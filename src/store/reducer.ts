@@ -32,34 +32,14 @@ const initialState: ApplicationState = {
   tabs: {
     '0': {
       id: '0',
-      title: 'Tab 1',
+      title: 'Tasks',
       taskIds: ['0'],
-    },
-    '1': {
-      id: '1',
-      title: 'Tab 2',
-      taskIds: ['1'],
-    },
-    '2': {
-      id: '2',
-      title: 'Tab 3',
-      taskIds: ['2'],
     },
   },
   tasks: {
     '0': {
       id: '0',
-      title: 'Task from first tab',
-      done: false,
-    },
-    '1': {
-      id: '1',
-      title: 'Task from second tab',
-      done: false,
-    },
-    '2': {
-      id: '2',
-      title: 'Task from third tab',
+      title: '',
       done: false,
     },
   },
@@ -67,6 +47,8 @@ const initialState: ApplicationState = {
 
 export const reducer: Reducer<ApplicationState> = (state = initialState, { type, payload }) => {
   switch (type) {
+    case systemActionTypes.INIT:
+      return { ...payload };
     case systemActionTypes.ADD_TASK:
     case systemActionTypes.REMOVE_TASK:
     case systemActionTypes.TOGGLE_TASK:

@@ -9,6 +9,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
 	devtool: 'source-map',
+	devServer: {
+		proxy: {
+			'/api': 'http://localhost:3000',
+		},
+	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
 		alias: {
