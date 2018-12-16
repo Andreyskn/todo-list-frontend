@@ -6,5 +6,7 @@ declare module '*.svg' {
 declare module 'Icons' {
   const EditIcon: any;
   const AddIcon: any;
-  export { EditIcon, AddIcon };
+  const SaveIcon: any;
+  const CrossIcon: any;
+  export { EditIcon, AddIcon, SaveIcon, CrossIcon };
 }

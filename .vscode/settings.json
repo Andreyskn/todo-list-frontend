@@ -1,11 +1,3 @@
 {
-	"editor.formatOnSave": true,
-	"[typescriptreact]": {
-		"editor.formatOnType": true,
-		"editor.formatOnPaste": false
-	},
-	"[typescript]": {
-		"editor.formatOnType": true,
-		"editor.formatOnPaste": false
-	}
+  "editor.formatOnType": true
 }

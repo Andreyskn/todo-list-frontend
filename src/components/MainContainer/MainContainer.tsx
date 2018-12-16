@@ -26,7 +26,7 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
     const { dispatch } = this.props;
 
     fetch('/api/init')
-      .then((res) => (res.status === 200 ? res.json() : null))
+      .then((res) => res.status === 200 && res.json())
       .then((data) => data && dispatch(systemActions.init(data)))
       .then(() => this.setState({ loading: false }))
       .catch((err) => console.error('Failed init request', err));
