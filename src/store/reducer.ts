@@ -15,6 +15,7 @@ export type Tab = {
   id: string;
   title: string;
   taskIds: string[];
+  daily: boolean;
 };
 
 export type Tabs = {
@@ -34,6 +35,7 @@ const initialState: ApplicationState = {
       id: '0',
       title: 'Tasks',
       taskIds: ['0'],
+      daily: false,
     },
   },
   tasks: {
@@ -57,6 +59,7 @@ export const reducer: Reducer<ApplicationState> = (state = initialState, { type,
     case systemActionTypes.ADD_TAB:
     case systemActionTypes.REMOVE_TAB:
     case systemActionTypes.UPDATE_TAB_TITLE:
+    case systemActionTypes.TOGGLE_DAILY_MODE:
       return { ...state, ...payload };
 
     default:

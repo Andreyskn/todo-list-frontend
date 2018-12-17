@@ -56,10 +56,16 @@ const applyContainerModifier = (modifier) => {
           background-color: #c3c3c354;
         }
       `;
-    case 'round':
+    case 'settings':
       return css`
         position: absolute;
         right: 10px;
+        top: 8px;
+      `;
+    case 'rename':
+      return css`
+        position: absolute;
+        right: 60px;
         top: 8px;
       `;
     case 'task-add':
@@ -92,7 +98,8 @@ const applyButtonModifier = (modifier) => {
         align-items: center;
         color: #ffffff;
       `;
-    case 'round':
+    case 'rename':
+    case 'settings':
       return css`
         ${roundButtonStyles}
       `;

@@ -10,6 +10,7 @@ export const systemActionTypes = {
   ADD_TAB: '🚀 ADD_TAB',
   REMOVE_TAB: '🚀 REMOVE_TAB',
   UPDATE_TAB_TITLE: '🚀 UPDATE_TAB_TITLE',
+  TOGGLE_DAILY_MODE: '🚀 TOGGLE_DAILY_MODE',
 };
 
 export const facadeActionTypes = {
@@ -20,6 +21,7 @@ export const facadeActionTypes = {
   ADD_TAB: '🏠 ADD_TAB',
   REMOVE_TAB: '🏠 REMOVE_TAB',
   UPDATE_TAB_TITLE: '🏠 UPDATE_TAB_TITLE',
+  TOGGLE_DAILY_MODE: '🏠 TOGGLE_DAILY_MODE',
 };
 
 export const systemActions = {
@@ -56,6 +58,10 @@ export const systemActions = {
     type: systemActionTypes.UPDATE_TAB_TITLE,
     payload: { tabs },
   }),
+  toggleDailyMode: (tabs: Tabs) => ({
+    type: systemActionTypes.TOGGLE_DAILY_MODE,
+    payload: { tabs },
+  }),
 };
 
 export const facadeActions = {
@@ -83,5 +89,9 @@ export const facadeActions = {
   updateTabTitle: (tabId: string, title: string) => ({
     type: facadeActionTypes.UPDATE_TAB_TITLE,
     payload: { tabId, title },
+  }),
+  toggleDailyMode: (tabId: string) => ({
+    type: facadeActionTypes.TOGGLE_DAILY_MODE,
+    payload: { tabId },
   }),
 };

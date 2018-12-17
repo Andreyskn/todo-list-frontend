@@ -1,4 +1,5 @@
-export { default as EditIcon } from './edit.svg';
-export { default as AddIcon } from './add.svg';
-export { default as SaveIcon } from './save.svg';
-export { default as CrossIcon } from './cross.svg';
+export { default as Edit } from './edit.svg';
+export { default as Add } from './add.svg';
+export { default as Save } from './save.svg';
+export { default as Cross } from './cross.svg';
+export { default as Settings } from './settings.svg';

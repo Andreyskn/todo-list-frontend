@@ -44,7 +44,13 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
     return (
       <MainContainer__>
         <TabSwitchPanel dispatch={dispatch} tabs={tabs} activeTab={activeTab} />
-        <Tab tabId={tabToRender.id} title={tabToRender.title} tasks={activeTasks} dispatch={dispatch} />
+        <Tab
+          tabId={tabToRender.id}
+          title={tabToRender.title}
+          tasks={activeTasks}
+          dispatch={dispatch}
+          daily={tabToRender.daily}
+        />
         <BottomPanel state={{ activeTab, tabs, tasks }} />
       </MainContainer__>
     );

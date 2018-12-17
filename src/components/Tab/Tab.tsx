@@ -12,15 +12,18 @@ interface TabProps {
   title: string;
   tabId: string;
   tasks: Task[];
+  daily: boolean;
 }
 
 interface TabState {
   renamingMode: boolean;
+  openSettings: boolean;
 }
 
 export class Tab extends React.Component<TabProps, TabState> {
   state = {
     renamingMode: false,
+    openSettings: false,
   };
 
   addTask = (tabId: string) => () => this.props.dispatch(facadeActions.addTask(tabId));
@@ -37,14 +40,21 @@ export class Tab extends React.Component<TabProps, TabState> {
     this.setRenameMode(false);
   };
 
+  toggleSettings = () => this.setState({ openSettings: !this.state.openSettings });
+
+  toggleDailyMode = () => {
+    const { tabId, dispatch } = this.props;
+    dispatch(facadeActions.toggleDailyMode(tabId));
+  };
+
   onKeyUp = (e) => {
     e.keyCode === 13 && this.renameTab(e);
     e.keyCode === 27 && this.setRenameMode(false);
   };
 
   render() {
-    const { title, tabId, tasks, dispatch } = this.props;
-    const { renamingMode } = this.state;
+    const { title, tabId, tasks, daily, dispatch } = this.props;
+    const { renamingMode, openSettings } = this.state;
 
     return (
       <Tab__>
@@ -61,7 +71,14 @@ export class Tab extends React.Component<TabProps, TabState> {
           ) : (
             <Tab__.Title>{title}</Tab__.Title>
           )}
-          {!renamingMode && <Button onClick={() => this.setRenameMode(true)} icon={'edit'} styleMode={'round'} />}
+          {!renamingMode && <Button onClick={() => this.setRenameMode(true)} icon={'edit'} styleMode={'rename'} />}
+          {!renamingMode && <Button onClick={this.toggleSettings} icon={'settings'} styleMode={'settings'} />}
+          {openSettings && (
+            <Tab__.Settings>
+              <input type='checkbox' id='daily' checked={daily} onChange={this.toggleDailyMode} />
+              <label htmlFor='daily'>Refresh daily</label>
+            </Tab__.Settings>
+          )}
         </Tab__.Header>
         <TaskList tasks={tasks} dispatch={dispatch} addTask={this.addTask(tabId)} removeTask={this.removeTask(tabId)} />
       </Tab__>

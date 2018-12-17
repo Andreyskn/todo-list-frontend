@@ -20,6 +20,7 @@ const createNewTab = (id: string, taskId: string): Tab => ({
   id,
   title: freshTabTitle,
   taskIds: [taskId],
+  daily: false,
 });
 
 function* getNewTabWithTask() {
@@ -160,6 +161,16 @@ function* updateTabTitle({ payload: { tabId, title } }: Action<{ tabId: string; 
   yield put(systemActions.updateTabTitle(updatedTabs));
 }
 
+function* toggleDailyMode({ payload: { tabId } }: Action<{ tabId: string }>): Iterator<Effect> {
+  const { tabs } = yield select();
+
+  const updatedTabs = produce(tabs, (draftTabs) => {
+    draftTabs[tabId].daily = !tabs[tabId].daily;
+  });
+
+  yield put(systemActions.toggleDailyMode(updatedTabs));
+}
+
 export function* saga() {
   yield takeEvery(facadeActionTypes.ADD_TASK, addTask);
   yield takeEvery(facadeActionTypes.REMOVE_TASK, removeTask);
@@ -168,4 +179,5 @@ export function* saga() {
   yield takeEvery(facadeActionTypes.ADD_TAB, addTab);
   yield takeEvery(facadeActionTypes.REMOVE_TAB, removeTab);
   yield takeEvery(facadeActionTypes.UPDATE_TAB_TITLE, updateTabTitle);
+  yield takeEvery(facadeActionTypes.TOGGLE_DAILY_MODE, toggleDailyMode);
 }

@@ -4,9 +4,10 @@ declare module '*.svg' {
 }
 
 declare module 'Icons' {
-  const EditIcon: any;
-  const AddIcon: any;
-  const SaveIcon: any;
-  const CrossIcon: any;
-  export { EditIcon, AddIcon, SaveIcon, CrossIcon };
+  const Edit: any;
+  const Add: any;
+  const Save: any;
+  const Cross: any;
+  const Settings: any;
+  export { Edit, Add, Save, Cross, Settings };
 }

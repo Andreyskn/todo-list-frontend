@@ -10,7 +10,7 @@ const Header = styled.div`
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  padding: 10px 60px;
+  padding: 10px 110px;
   font-size: 18px;
   font-weight: bold;
   height: 60px;
@@ -35,6 +35,14 @@ const Input = styled.input`
   text-align: center;
 `;
 
+const Settings = styled.div`
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 5px;
+  z-index: 1;
+`;
+
 Tab__.Header = Header;
 Tab__.Title = Title;
 Tab__.Input = Input;
+Tab__.Settings = Settings;

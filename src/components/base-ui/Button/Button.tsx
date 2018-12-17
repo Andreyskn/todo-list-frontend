@@ -2,20 +2,21 @@ import React, { ReactElement } from 'react';
 
 import { Button__ } from './styled';
 
-import { EditIcon, AddIcon, SaveIcon, CrossIcon } from 'Icons';
+import { Edit, Add, Save, Cross, Settings } from 'Icons';
 
 interface ButtonProps {
   text?: string;
   onClick: () => any;
-  styleMode?: 'tab-switcher' | 'tab-close' | 'tab-add' | 'round' | 'task-add' | 'save' | 'remove';
-  icon?: 'edit' | 'add' | 'save' | 'cross';
+  styleMode?: 'tab-switcher' | 'tab-close' | 'tab-add' | 'rename' | 'task-add' | 'save' | 'remove' | 'settings';
+  icon?: 'edit' | 'add' | 'save' | 'cross' | 'settings';
 }
 
 const icons = {
-  edit: <EditIcon />,
-  add: <AddIcon />,
-  save: <SaveIcon />,
-  cross: <CrossIcon />,
+  edit: <Edit />,
+  add: <Add />,
+  save: <Save />,
+  cross: <Cross />,
+  settings: <Settings />,
 };
 
 export function Button({ text, onClick, styleMode, icon }: ButtonProps): ReactElement<ButtonProps> {
