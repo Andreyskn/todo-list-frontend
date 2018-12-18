@@ -1,7 +1,9 @@
 import { put, select, call, takeEvery, Effect } from 'redux-saga/effects';
+import produce from 'immer';
+import { startOfTomorrow, startOfToday } from 'date-fns';
+
 import { systemActions, facadeActionTypes } from './actions';
 import { Task, Tasks, Tab, Tabs, ApplicationState } from './reducer';
-import produce from 'immer';
 
 // TODO: selectors
 
@@ -14,7 +16,12 @@ const freshTabTitle = 'New tab';
 
 const generateId = (ids: string[]): string => `${Math.max(...ids.map((id) => parseInt(id, 10))) + 1}`;
 
-const createNewTask = (id: string): Task => ({ id, title: '', done: false });
+const createNewTask = (id: string, daily: boolean = false): Task => ({
+  id,
+  title: '',
+  done: false,
+  refreshTime: setRefeshTime(daily),
+});
 
 const createNewTab = (id: string, taskId: string): Tab => ({
   id,
@@ -22,6 +29,15 @@ const createNewTab = (id: string, taskId: string): Tab => ({
   taskIds: [taskId],
   daily: false,
 });
+
+const setRefeshTime = (dailyModeState: boolean): number | null => {
+  if (!dailyModeState) return null;
+
+  const refreshHour = 3; // 3 AM
+  const currentHour = new Date().getHours();
+
+  return currentHour < refreshHour ? startOfToday().setHours(refreshHour) : startOfTomorrow().setHours(refreshHour);
+};
 
 function* getNewTabWithTask() {
   const { tabs, tasks } = yield select();
@@ -34,8 +50,9 @@ function* getNewTabWithTask() {
 
 function* addTask({ payload: tabId }: Action<string>): Iterator<Effect> {
   const { tabs, tasks } = yield select();
+  const dailyMode = tabs[tabId].daily;
   const newTaskId = yield call(generateId, Object.keys(tasks));
-  const newTask = yield call(createNewTask, newTaskId);
+  const newTask = yield call(createNewTask, newTaskId, dailyMode);
 
   const updatedTasks = produce(tasks, (draftTasks) => {
     draftTasks[newTaskId] = newTask;
@@ -53,6 +70,7 @@ function* removeTask({
   const { tabs, tasks } = yield select();
   const hasSingleTask = tabs[tabId].taskIds.length === 1;
   const taskToRemove = tasks[taskId];
+  const dailyMode = tabs[tabId].daily;
 
   if (hasSingleTask && !taskToRemove.title && !taskToRemove.done) return;
 
@@ -60,7 +78,7 @@ function* removeTask({
   let newTask;
   if (hasSingleTask) {
     newTaskId = yield call(generateId, Object.keys(tasks));
-    newTask = yield call(createNewTask, newTaskId);
+    newTask = yield call(createNewTask, newTaskId, dailyMode);
   }
 
   const updatedTasks = produce(tasks, (draftTasks) => {
@@ -162,13 +180,18 @@ function* updateTabTitle({ payload: { tabId, title } }: Action<{ tabId: string; 
 }
 
 function* toggleDailyMode({ payload: { tabId } }: Action<{ tabId: string }>): Iterator<Effect> {
-  const { tabs } = yield select();
+  const { tabs, tasks } = yield select();
+  const nextDailyModeState: boolean = !tabs[tabId].daily;
+  const tasksToUpdate = tabs[tabId].taskIds;
 
   const updatedTabs = produce(tabs, (draftTabs) => {
-    draftTabs[tabId].daily = !tabs[tabId].daily;
+    draftTabs[tabId].daily = nextDailyModeState;
+  });
+  const updatedTasks = produce(tasks, (draftTasks) => {
+    tasksToUpdate.map((id) => (draftTasks[id].refreshTime = setRefeshTime(nextDailyModeState)));
   });
 
-  yield put(systemActions.toggleDailyMode(updatedTabs));
+  yield put(systemActions.toggleDailyMode({ tasks: updatedTasks, tabs: updatedTabs }));
 }
 
 export function* saga() {

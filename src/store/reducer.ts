@@ -5,6 +5,7 @@ export type Task = {
   id: string;
   title: string;
   done: boolean;
+  refreshTime: number | null;
 };
 
 export type Tasks = {
@@ -43,6 +44,7 @@ const initialState: ApplicationState = {
       id: '0',
       title: '',
       done: false,
+      refreshTime: null,
     },
   },
 };

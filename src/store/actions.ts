@@ -58,9 +58,9 @@ export const systemActions = {
     type: systemActionTypes.UPDATE_TAB_TITLE,
     payload: { tabs },
   }),
-  toggleDailyMode: (tabs: Tabs) => ({
+  toggleDailyMode: (changeSet: { tasks: Tasks; tabs: Tabs }) => ({
     type: systemActionTypes.TOGGLE_DAILY_MODE,
-    payload: { tabs },
+    payload: changeSet,
   }),
 };
 
