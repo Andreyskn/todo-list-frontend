@@ -1,4 +1,4 @@
-import { Tasks, Tabs, ApplicationState } from './reducer';
+import { Tasks, Tabs, ApplicationState, Views } from './reducer';
 
 export const systemActionTypes = {
   INIT: '🔥 INIT',
@@ -11,6 +11,7 @@ export const systemActionTypes = {
   REMOVE_TAB: '🚀 REMOVE_TAB',
   UPDATE_TAB_TITLE: '🚀 UPDATE_TAB_TITLE',
   TOGGLE_DAILY_MODE: '🚀 TOGGLE_DAILY_MODE',
+  CHANGE_VIEW: '🚀 CHANGE_VIEW',
 };
 
 export const facadeActionTypes = {
@@ -22,6 +23,7 @@ export const facadeActionTypes = {
   REMOVE_TAB: '🏠 REMOVE_TAB',
   UPDATE_TAB_TITLE: '🏠 UPDATE_TAB_TITLE',
   TOGGLE_DAILY_MODE: '🏠 TOGGLE_DAILY_MODE',
+  CHANGE_VIEW: '🏠 CHANGE_VIEW',
 };
 
 export const systemActions = {
@@ -62,6 +64,10 @@ export const systemActions = {
     type: systemActionTypes.TOGGLE_DAILY_MODE,
     payload: changeSet,
   }),
+  changeView: (changeSet: { activeView: Views; activeTab: string }) => ({
+    type: systemActionTypes.CHANGE_VIEW,
+    payload: changeSet,
+  }),
 };
 
 export const facadeActions = {
@@ -94,4 +100,5 @@ export const facadeActions = {
     type: facadeActionTypes.TOGGLE_DAILY_MODE,
     payload: { tabId },
   }),
+  changeView: (view: Views) => ({ type: facadeActionTypes.CHANGE_VIEW, payload: view }),
 };

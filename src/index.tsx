@@ -20,9 +20,7 @@ class App extends React.Component<{}, {}> {
         <Normalize />
         <GlobalStyle />
         <Provider store={store}>
-          <React.Fragment>
-            <connected.MainContainer />
-          </React.Fragment>
+          <connected.MainContainer />
         </Provider>
       </React.Fragment>
     );

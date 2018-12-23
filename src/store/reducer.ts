@@ -97,6 +97,7 @@ export const reducer: Reducer<ApplicationState> = (state = initialState, { type,
     case systemActionTypes.REMOVE_TAB:
     case systemActionTypes.UPDATE_TAB_TITLE:
     case systemActionTypes.TOGGLE_DAILY_MODE:
+    case systemActionTypes.CHANGE_VIEW:
       return { ...state, ...payload };
 
     default:

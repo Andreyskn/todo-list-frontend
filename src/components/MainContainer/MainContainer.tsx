@@ -50,7 +50,7 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
 
     return (
       <MainContainer__>
-        <Sidebar />
+        <Sidebar dispatch={dispatch} activeView={activeView} />
         <MainContainer__.Content>
           <TabSwitchPanel dispatch={dispatch} tabs={visibleTabs} activeTab={activeTab} />
           <Tab
