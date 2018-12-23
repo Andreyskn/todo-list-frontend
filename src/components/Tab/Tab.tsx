@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { Task } from '../../store/reducer';
+import { Task, Note, Views } from '../../store/reducer';
 import { Button, Input } from '../base-ui';
 import { TaskList } from '../TaskList';
 import { facadeActions } from '../../store/actions';
@@ -11,8 +11,11 @@ interface TabProps {
   dispatch: Dispatch;
   title: string;
   tabId: string;
-  tasks: Task[];
-  daily: boolean;
+  activeView: Views;
+  entities: (Task | Note)[];
+  settings: {
+    daily?: boolean;
+  };
 }
 
 interface TabState {
@@ -53,7 +56,7 @@ export class Tab extends React.Component<TabProps, TabState> {
   };
 
   render() {
-    const { title, tabId, tasks, daily, dispatch } = this.props;
+    const { activeView, title, tabId, entities, settings, dispatch } = this.props;
     const { renamingMode, openSettings } = this.state;
 
     return (
@@ -75,12 +78,25 @@ export class Tab extends React.Component<TabProps, TabState> {
           {!renamingMode && <Button onClick={this.toggleSettings} icon={'settings'} styleMode={'settings'} />}
           {openSettings && (
             <Tab__.Settings>
-              <input type='checkbox' id='daily' checked={daily} onChange={this.toggleDailyMode} />
-              <label htmlFor='daily'>Refresh daily</label>
+              {settings.hasOwnProperty('daily') ? (
+                <React.Fragment>
+                  <input type='checkbox' id='daily' checked={settings.daily} onChange={this.toggleDailyMode} />
+                  <label htmlFor='daily'>Refresh daily</label>
+                </React.Fragment>
+              ) : (
+                'Empty'
+              )}
             </Tab__.Settings>
           )}
         </Tab__.Header>
-        <TaskList tasks={tasks} dispatch={dispatch} addTask={this.addTask(tabId)} removeTask={this.removeTask(tabId)} />
+        {activeView === 'tasks' && (
+          <TaskList
+            tasks={entities as Task[]}
+            dispatch={dispatch}
+            addTask={this.addTask(tabId)}
+            removeTask={this.removeTask(tabId)}
+          />
+        )}
       </Tab__>
     );
   }

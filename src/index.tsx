@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
-import store from './store';
+import { store } from './store';
 import { ApplicationState } from './store/reducer';
+
 import { MainContainer } from './components/MainContainer';
+
 import { Normalize } from 'styled-normalize';
 import { GlobalStyle } from './styles';
 
@@ -18,7 +20,9 @@ class App extends React.Component<{}, {}> {
         <Normalize />
         <GlobalStyle />
         <Provider store={store}>
-          <connected.MainContainer />
+          <React.Fragment>
+            <connected.MainContainer />
+          </React.Fragment>
         </Provider>
       </React.Fragment>
     );

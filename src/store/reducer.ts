@@ -1,6 +1,8 @@
 import { systemActionTypes } from './actions';
 import { Reducer } from 'redux';
 
+export type Views = 'tasks' | 'notes';
+
 export type Task = {
   id: string;
   title: string;
@@ -14,29 +16,55 @@ export type Tasks = {
 
 export type Tab = {
   id: string;
+  kind: Views;
   title: string;
-  taskIds: string[];
-  daily: boolean;
+  contentIds: string[];
+  settings: {
+    daily?: boolean;
+  };
 };
 
 export type Tabs = {
   [key: string]: Tab;
 };
 
+export type Note = {
+  id: string;
+  title: string;
+  text: string;
+};
+
+export type Notes = {
+  [key: string]: Note;
+};
+
 export type ApplicationState = {
+  activeView: Views;
   activeTab: string;
   tabs: Tabs;
   tasks: Tasks;
+  notes: Notes;
 };
 
 const initialState: ApplicationState = {
+  activeView: 'tasks',
   activeTab: '0',
   tabs: {
     '0': {
       id: '0',
+      kind: 'tasks',
       title: 'Tasks',
-      taskIds: ['0'],
-      daily: false,
+      contentIds: ['0'],
+      settings: {
+        daily: false,
+      },
+    },
+    '1': {
+      id: '1',
+      kind: 'notes',
+      title: 'Notes',
+      contentIds: ['0'],
+      settings: {},
     },
   },
   tasks: {
@@ -45,6 +73,13 @@ const initialState: ApplicationState = {
       title: '',
       done: false,
       refreshTime: null,
+    },
+  },
+  notes: {
+    '0': {
+      id: '0',
+      title: '',
+      text: '',
     },
   },
 };

@@ -15,8 +15,10 @@ const Header = styled.div`
   font-weight: bold;
   height: 60px;
   justify-content: center;
-  background: white;
+  background: #699e6b;
   position: relative;
+  border-radius: 30px;
+  margin: 10px;
 `;
 
 const Title = styled.span`

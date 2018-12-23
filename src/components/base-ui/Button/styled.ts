@@ -20,9 +20,10 @@ const Button = styled.button`
 `;
 
 const Span = styled.span`
-  display: flex;
+  display: block;
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const applyContainerModifier = (modifier) => {
@@ -71,8 +72,8 @@ const applyContainerModifier = (modifier) => {
     case 'task-add':
       return css`
         position: fixed;
-        right: 18vw;
-        bottom: 16vh;
+        right: 10%;
+        bottom: 10%;
       `;
   }
 };
