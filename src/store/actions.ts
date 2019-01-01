@@ -1,4 +1,4 @@
-import { Tasks, Tabs, ApplicationState, Views } from './reducer';
+import { Tasks, Tabs, Notes, ApplicationState, Views } from './reducer';
 
 export const systemActionTypes = {
   INIT: '🔥 INIT',
@@ -8,10 +8,15 @@ export const systemActionTypes = {
   UPDATE_TASK_TITLE: '🚀 UPDATE_TASK_TITLE',
   SWITCH_TAB: '🚀 SWITCH_TAB',
   ADD_TAB: '🚀 ADD_TAB',
+  ADD_NOTES_TAB: '🚀 ADD_NOTES_TAB',
   REMOVE_TAB: '🚀 REMOVE_TAB',
   UPDATE_TAB_TITLE: '🚀 UPDATE_TAB_TITLE',
   TOGGLE_DAILY_MODE: '🚀 TOGGLE_DAILY_MODE',
   CHANGE_VIEW: '🚀 CHANGE_VIEW',
+  OPEN_NOTE_EDITOR: '🚀 OPEN_NOTE_EDITOR',
+  UPDATE_NOTE: '🚀 UPDATE_NOTE',
+  ADD_NOTE: '🚀 ADD_NOTE',
+  REMOVE_NOTE: '🚀 REMOVE_NOTE',
 };
 
 export const facadeActionTypes = {
@@ -24,6 +29,9 @@ export const facadeActionTypes = {
   UPDATE_TAB_TITLE: '🏠 UPDATE_TAB_TITLE',
   TOGGLE_DAILY_MODE: '🏠 TOGGLE_DAILY_MODE',
   CHANGE_VIEW: '🏠 CHANGE_VIEW',
+  UPDATE_NOTE: '🏠 UPDATE_NOTE',
+  ADD_NOTE: '🏠 ADD_NOTE',
+  REMOVE_NOTE: '🏠 REMOVE_NOTE',
 };
 
 export const systemActions = {
@@ -52,6 +60,10 @@ export const systemActions = {
     type: systemActionTypes.ADD_TAB,
     payload: changeSet,
   }),
+  addNotesTab: (changeSet: { tabs: Tabs; activeTab: string }) => ({
+    type: systemActionTypes.ADD_NOTES_TAB,
+    payload: changeSet,
+  }),
   removeTab: (changeSet: { tasks: Tasks; tabs: Tabs }) => ({
     type: systemActionTypes.REMOVE_TAB,
     payload: changeSet,
@@ -66,6 +78,18 @@ export const systemActions = {
   }),
   changeView: (changeSet: { activeView: Views; activeTab: string }) => ({
     type: systemActionTypes.CHANGE_VIEW,
+    payload: changeSet,
+  }),
+  updateNote: (notes: Notes) => ({
+    type: systemActionTypes.UPDATE_NOTE,
+    payload: { notes },
+  }),
+  addNote: (changeSet: { notes: Notes; tabs: Tabs }) => ({
+    type: systemActionTypes.ADD_NOTE,
+    payload: changeSet,
+  }),
+  removeNote: (changeSet: { notes: Notes; tabs: Tabs }) => ({
+    type: systemActionTypes.REMOVE_NOTE,
     payload: changeSet,
   }),
 };
@@ -101,4 +125,16 @@ export const facadeActions = {
     payload: { tabId },
   }),
   changeView: (view: Views) => ({ type: facadeActionTypes.CHANGE_VIEW, payload: view }),
+  updateNote: (noteId: string, title: string, text: string) => ({
+    type: facadeActionTypes.UPDATE_NOTE,
+    payload: { noteId, title, text },
+  }),
+  addNote: (tabId: string) => ({
+    type: facadeActionTypes.ADD_NOTE,
+    payload: tabId,
+  }),
+  removeNote: (tabId: string, noteId: string) => ({
+    type: facadeActionTypes.REMOVE_NOTE,
+    payload: { tabId, noteId },
+  }),
 };

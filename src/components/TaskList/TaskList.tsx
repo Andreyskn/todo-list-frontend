@@ -1,9 +1,11 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import { Task as TaskType } from '../../store/reducer';
+import { facadeActions } from '../../store/actions';
+
 import { Task } from '../Task';
 import { Button } from '../base-ui';
-import { facadeActions } from '../../store/actions';
+
 import { TaskList__ } from './styled';
 
 interface TaskListProps {

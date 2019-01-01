@@ -1,3 +1,4 @@
+/// <reference path='../../../typings/custom.d.ts'/>
 import React, { ReactElement } from 'react';
 
 import { Button__ } from './styled';

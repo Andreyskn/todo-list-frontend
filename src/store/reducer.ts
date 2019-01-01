@@ -78,8 +78,8 @@ const initialState: ApplicationState = {
   notes: {
     '0': {
       id: '0',
-      title: '',
-      text: '',
+      title: 'Note Title',
+      text: 'Note Text',
     },
   },
 };
@@ -94,10 +94,14 @@ export const reducer: Reducer<ApplicationState> = (state = initialState, { type,
     case systemActionTypes.UPDATE_TASK_TITLE:
     case systemActionTypes.SWITCH_TAB:
     case systemActionTypes.ADD_TAB:
+    case systemActionTypes.ADD_NOTES_TAB:
     case systemActionTypes.REMOVE_TAB:
     case systemActionTypes.UPDATE_TAB_TITLE:
     case systemActionTypes.TOGGLE_DAILY_MODE:
     case systemActionTypes.CHANGE_VIEW:
+    case systemActionTypes.UPDATE_NOTE:
+    case systemActionTypes.ADD_NOTE:
+    case systemActionTypes.REMOVE_NOTE:
       return { ...state, ...payload };
 
     default:

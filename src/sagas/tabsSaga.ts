@@ -22,28 +22,44 @@ function* getNewTabWithTask() {
 }
 
 function* addTab(): Iterator<Effect> {
-  const { tabs, tasks } = yield select();
-  const { newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask);
+  const { tabs, tasks, activeView } = yield select();
 
-  console.log(newTaskId, newTask, newTabId, newTab);
+  if (activeView === 'notes') {
+    const newTabId = yield call(generateId, Object.keys(tabs));
+    const newTab = yield call(createNewTab, newTabId, null, 'notes');
 
-  const updatedTabs = produce(tabs, (draftTabs) => {
-    draftTabs[newTabId] = newTab;
-  });
-  const updatedTasks = produce(tasks, (draftTasks) => {
-    draftTasks[newTaskId] = newTask;
-  });
+    const updatedTabs = produce(tabs, (draftTabs) => {
+      draftTabs[newTabId] = newTab;
+    });
 
-  yield put(
-    systemActions.addTab({
-      tasks: updatedTasks,
-      tabs: updatedTabs,
-      activeTab: newTabId,
-    })
-  );
+    yield put(
+      systemActions.addNotesTab({
+        tabs: updatedTabs,
+        activeTab: newTabId,
+      })
+    );
+  } else {
+    const { newTaskId, newTask, newTabId, newTab } = yield call(getNewTabWithTask);
+
+    const updatedTabs = produce(tabs, (draftTabs) => {
+      draftTabs[newTabId] = newTab;
+    });
+    const updatedTasks = produce(tasks, (draftTasks) => {
+      draftTasks[newTaskId] = newTask;
+    });
+
+    yield put(
+      systemActions.addTab({
+        tasks: updatedTasks,
+        tabs: updatedTabs,
+        activeTab: newTabId,
+      })
+    );
+  }
 }
 
 function* removeTab({ payload: tabId }: Action<string>): Iterator<Effect> {
+  // TODO: adjust for notes
   const {
     tabs,
     tasks,

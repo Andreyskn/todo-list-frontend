@@ -12,11 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "baseUrl": "./src",
-    "paths": {
-      "Icons": ["assets/icons/index.ts"]
-    }
+    "noUnusedParameters": true
   },
   "include": ["src"]
 }

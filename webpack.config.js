@@ -1,6 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: './src/index.html',
@@ -40,5 +39,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [htmlPlugin, new TsConfigPathsPlugin()],
+  plugins: [htmlPlugin],
 };

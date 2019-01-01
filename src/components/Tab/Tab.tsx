@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { Task, Note, Views } from '../../store/reducer';
 import { Button, Input } from '../base-ui';
 import { TaskList } from '../TaskList';
+import { NoteList } from '../NoteList';
 import { facadeActions } from '../../store/actions';
 
 import { Tab__ } from './styled';
@@ -97,6 +98,7 @@ export class Tab extends React.Component<TabProps, TabState> {
             removeTask={this.removeTask(tabId)}
           />
         )}
+        {activeView === 'notes' && <NoteList notes={entities as Note[]} dispatch={dispatch} tabId={tabId} />}
       </Tab__>
     );
   }
