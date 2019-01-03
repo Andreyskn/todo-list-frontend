@@ -52,7 +52,7 @@ function* updateNote({
 }
 
 export const notesSaga = function*() {
-  yield takeEvery(facadeActionTypes.UPDATE_NOTE, updateNote);
   yield takeEvery(facadeActionTypes.ADD_NOTE, addNote);
   yield takeEvery(facadeActionTypes.REMOVE_NOTE, removeNote);
+  yield takeEvery(facadeActionTypes.UPDATE_NOTE, updateNote);
 };

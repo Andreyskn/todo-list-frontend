@@ -1,11 +1,13 @@
 import React from 'react';
-import ReactModal from 'react-modal';
+// import ReactModal from 'react-modal';
 import { Dispatch } from 'redux';
 import { Note } from '../../store/reducer';
 import { facadeActions } from '../../store/actions';
 
 import { Button } from '../base-ui';
 import { NoteEditor } from '../NoteEditor';
+
+import { Modal__ } from './styled';
 
 interface NoteListProps {
   dispatch: Dispatch;
@@ -63,7 +65,7 @@ export class NoteList extends React.Component<NoteListProps> {
           </div>
         ))}
         <Button icon={'add'} styleMode={'task-add'} onClick={this.addNote} />
-        <ReactModal {...modalProps}>{noteToEdit && <NoteEditor note={noteToEdit} dispatch={dispatch} />}</ReactModal>
+        <Modal__ {...modalProps}>{noteToEdit && <NoteEditor note={noteToEdit} dispatch={dispatch} />}</Modal__>
       </div>
     );
   }

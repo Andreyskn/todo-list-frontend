@@ -14,7 +14,7 @@ export const createNewTask = (id: string, daily: boolean = false): Task => ({
 
 export const createNewNote = (id: string): Note => ({
   id,
-  title: 'New note',
+  title: '',
   text: '',
 });
 

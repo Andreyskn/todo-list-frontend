@@ -2,6 +2,8 @@ import React from 'react';
 
 import { facadeActions } from '../../store/actions';
 
+import { NoteEditor__ } from './styled';
+
 export class NoteEditor extends React.Component<any> {
   state = {
     title: this.props.note.title,
@@ -26,17 +28,13 @@ export class NoteEditor extends React.Component<any> {
   };
 
   render() {
-    const { note } = this.props;
     const { title, text } = this.state;
 
     return (
-      <div>
-        <div>{note.title}</div>
-        <input value={title} onChange={this.onTitleChange} autoFocus={true} />
-        <br />
-        <div>{note.text}</div>
-        <textarea value={text} onChange={this.onTextChange} />
-      </div>
+      <NoteEditor__>
+        <NoteEditor__.Input placeholder='Title' value={title} onChange={this.onTitleChange} autoFocus={!title} />
+        <NoteEditor__.Textarea value={text} onChange={this.onTextChange} autoFocus={title} />
+      </NoteEditor__>
     );
   }
 }
