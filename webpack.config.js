@@ -8,7 +8,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
   devtool: 'source-map',
+  output: {
+    publicPath: '/',
+  },
   devServer: {
+    historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:3000',
     },

@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { ConnectedRouter } from 'connected-react-router';
+import { withRouter } from 'react-router';
 import { Provider, connect } from 'react-redux';
-import { store } from './store';
+import { store, history } from './store';
 import { ApplicationState } from './store/reducer';
 
 import { MainContainer } from './components/MainContainer';
@@ -9,8 +12,13 @@ import { MainContainer } from './components/MainContainer';
 import { Normalize } from 'styled-normalize';
 import { GlobalStyle } from './styles';
 
+interface State {
+  router: any;
+  application: ApplicationState;
+}
+
 const connected = {
-  MainContainer: connect((state: ApplicationState) => state)(MainContainer),
+  MainContainer: withRouter(connect((state: State) => state)(MainContainer)),
 };
 
 class App extends React.Component<{}, {}> {
@@ -20,7 +28,9 @@ class App extends React.Component<{}, {}> {
         <Normalize />
         <GlobalStyle />
         <Provider store={store}>
-          <connected.MainContainer />
+          <ConnectedRouter history={history}>
+            <connected.MainContainer />
+          </ConnectedRouter>
         </Provider>
       </React.Fragment>
     );

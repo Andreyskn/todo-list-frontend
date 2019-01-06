@@ -13,7 +13,7 @@ type Action<T> = {
 };
 
 function* getNewTabWithTask() {
-  const { tabs, tasks } = yield select();
+  const { tabs, tasks } = (yield select()).application;
   const newTaskId = yield call(generateId, Object.keys(tasks));
   const newTask = yield call(createNewTask, newTaskId);
   const newTabId = yield call(generateId, Object.keys(tabs));
@@ -22,7 +22,7 @@ function* getNewTabWithTask() {
 }
 
 function* addTab(): Iterator<Effect> {
-  const { tabs, tasks, activeView } = yield select();
+  const { tabs, tasks, activeView } = (yield select()).application;
 
   if (activeView === 'notes') {
     const newTabId = yield call(generateId, Object.keys(tabs));
@@ -64,7 +64,7 @@ function* removeTab({ payload: tabId }: Action<string>): Iterator<Effect> {
     tasks,
     activeTab,
     activeView,
-  }: { tabs: Tabs; tasks: Tasks; activeTab: string; activeView: Views } = yield select();
+  }: { tabs: Tabs; tasks: Tasks; activeTab: string; activeView: Views } = (yield select()).application;
   const tabsKeys = Object.keys(tabs).filter((key) => tabs[key].kind === activeView);
   const isOnlyTab = tabsKeys.length === 1;
 
@@ -121,7 +121,7 @@ function* removeTab({ payload: tabId }: Action<string>): Iterator<Effect> {
 }
 
 function* updateTabTitle({ payload: { tabId, title } }: Action<{ tabId: string; title: string }>): Iterator<Effect> {
-  const { tabs } = yield select();
+  const { tabs } = (yield select()).application;
 
   const updatedTabs = produce(tabs, (draftTabs) => {
     draftTabs[tabId].title = title;
@@ -131,7 +131,7 @@ function* updateTabTitle({ payload: { tabId, title } }: Action<{ tabId: string; 
 }
 
 function* toggleDailyMode({ payload: { tabId } }: Action<{ tabId: string }>): Iterator<Effect> {
-  const { tabs, tasks } = yield select();
+  const { tabs, tasks } = (yield select()).application;
   const nextDailyModeState = !tabs[tabId].settings.daily;
   const tasksToUpdate = tabs[tabId].contentIds;
 

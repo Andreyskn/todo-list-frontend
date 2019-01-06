@@ -13,7 +13,7 @@ type Action<T> = {
 };
 
 function* addTask({ payload: tabId }: Action<string>): Iterator<Effect> {
-  const { tabs, tasks } = yield select();
+  const { tabs, tasks } = (yield select()).application;
   const dailyMode = tabs[tabId].daily;
   const newTaskId = yield call(generateId, Object.keys(tasks));
   const newTask = yield call(createNewTask, newTaskId, dailyMode);
@@ -31,7 +31,7 @@ function* addTask({ payload: tabId }: Action<string>): Iterator<Effect> {
 function* removeTask({
   payload: { tabId, taskId },
 }: Action<{ tabId: string; taskId: string }>): Iterator<Effect> | void {
-  const { tabs, tasks } = yield select();
+  const { tabs, tasks } = (yield select()).application;
   const hasSingleTask = tabs[tabId].contentIds.length === 1;
   const taskToRemove = tasks[taskId];
   const dailyMode = tabs[tabId].daily;
@@ -58,7 +58,7 @@ function* removeTask({
 }
 
 function* toggleTask({ payload: taskId }: Action<string>): Iterator<Effect> {
-  const { tasks } = yield select();
+  const { tasks } = (yield select()).application;
 
   const updatedTasks = produce(tasks, (draftTasks) => {
     draftTasks[taskId].done = !tasks[taskId].done;
@@ -68,7 +68,7 @@ function* toggleTask({ payload: taskId }: Action<string>): Iterator<Effect> {
 }
 
 function* updateTaskTitle({ payload: { taskId, title } }: Action<{ taskId: string; title: string }>): Iterator<Effect> {
-  const { tasks } = yield select();
+  const { tasks } = (yield select()).application;
 
   const updatedTasks = produce(tasks, (draftTasks) => {
     draftTasks[taskId].title = title;

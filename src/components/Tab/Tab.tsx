@@ -64,7 +64,6 @@ export class Tab extends React.Component<TabProps, TabState> {
       <Tab__>
         <Tab__.Header>
           {renamingMode ? (
-            // TODO: Change to base-ui/Input
             <Tab__.Input
               type='text'
               autoFocus={true}

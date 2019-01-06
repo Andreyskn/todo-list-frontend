@@ -11,7 +11,7 @@ type Action<T> = {
 };
 
 function* addNote({ payload: tabId }: Action<string>): Iterator<Effect> {
-  const { tabs, notes } = yield select();
+  const { tabs, notes } = (yield select()).application;
   const newNoteId = yield call(generateId, Object.keys(notes));
   const newNote = yield call(createNewNote, newNoteId);
 
@@ -26,7 +26,7 @@ function* addNote({ payload: tabId }: Action<string>): Iterator<Effect> {
 }
 
 function* removeNote({ payload: { tabId, noteId } }: Action<{ tabId: string; noteId: string }>): Iterator<Effect> {
-  const { tabs, notes } = yield select();
+  const { tabs, notes } = (yield select()).application;
 
   const updatedNotes = produce(notes, (draftNotes) => {
     delete draftNotes[noteId];
@@ -41,7 +41,7 @@ function* removeNote({ payload: { tabId, noteId } }: Action<{ tabId: string; not
 function* updateNote({
   payload: { noteId, title, text },
 }: Action<{ noteId: string; title: string; text: string }>): Iterator<Effect> {
-  const { notes } = yield select();
+  const { notes } = (yield select()).application;
 
   const updatedNotes = produce(notes, (draftNotes) => {
     draftNotes[noteId].title = title;

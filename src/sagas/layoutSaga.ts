@@ -10,7 +10,7 @@ type Action<T> = {
 };
 
 function* changeView({ payload: view }: Action<Views>): Iterator<Effect> {
-  const { tabs } = yield select();
+  const { tabs } = (yield select()).application;
   const firstTabId = Object.keys(tabs).find((key) => tabs[key].kind === view);
 
   yield put(systemActions.changeView({ activeView: view, activeTab: firstTabId }));

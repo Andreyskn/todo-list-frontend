@@ -9,7 +9,5 @@ interface TextareaProps {
 }
 
 export function Textarea({ className, text, onChange }: TextareaProps): ReactElement<TextareaProps> {
-  return (
-    <Textarea__ className={className} cols={30} rows={1} value={text} onChange={onChange}/>
-  );
+  return <Textarea__ className={className} cols={30} rows={1} value={text} onChange={onChange} />;
 }

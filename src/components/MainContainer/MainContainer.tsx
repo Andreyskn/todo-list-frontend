@@ -6,11 +6,13 @@ import { Tab } from '../Tab';
 import { TabSwitchPanel } from '../TabSwitchPanel';
 import { BottomPanel } from '../BottomPanel';
 
-import { systemActions } from '../../store/actions';
+import { systemActions, facadeActions } from '../../store/actions';
 import { ApplicationState } from '../../store/reducer';
 import { MainContainer__ } from './styled';
 
-interface MainContainerProps extends ApplicationState {
+interface MainContainerProps {
+  router: any;
+  application: ApplicationState;
   dispatch: Dispatch;
 }
 
@@ -24,23 +26,47 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
   };
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const {
+      dispatch,
+      router: {
+        location: { pathname },
+      },
+      application: { activeView },
+    } = this.props;
 
-    fetch('/api/init')
+    const path = pathname.slice(1);
+
+    if (['tasks', 'notes'].includes(path) && path !== activeView) {
+      dispatch(facadeActions.changeView(path));
+    }
+
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    const fetchTimeout = new Promise((resolve, reject) => {
+      setTimeout(reject, 1000, { timeout: true });
+    });
+
+    Promise.race<any>([fetch('/api/init', { signal }), fetchTimeout])
       .then((res) => res.status === 200 && res.json())
       .then((data) => data && dispatch(systemActions.init(data)))
-      .then(() => this.setState({ loading: false }))
-      .catch((err) => console.error('Failed init request', err));
+      .catch((err) => {
+        err.timeout && abortController.abort();
+        console.error('Init request failed:', err.timeout ? 'Timeout' : err);
+      })
+      .finally(() => this.setState({ loading: false }));
   }
 
   render() {
-    const { activeView, activeTab, tabs, tasks, notes, dispatch } = this.props;
+    const {
+      application: { activeView, activeTab, tabs, tasks, notes },
+      dispatch,
+    } = this.props;
     const { loading } = this.state;
     const tabToRender = tabs[activeTab];
 
     if (loading || !tabToRender) return null;
 
-    const activeEntities = tabToRender.contentIds.map((entityId) => this.props[activeView][entityId]);
+    const activeEntities = tabToRender.contentIds.map((entityId) => this.props.application[activeView][entityId]);
     const visibleTabs = Object.keys(tabs)
       .filter((key) => tabs[key].kind === activeView)
       .reduce((acc, cur) => {
@@ -61,7 +87,7 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
             dispatch={dispatch}
             settings={tabToRender.settings}
           />
-          <BottomPanel state={{ activeTab, tabs, tasks }} />
+          <BottomPanel state={{ activeTab, tabs, tasks, notes }} />
         </MainContainer__.Content>
       </MainContainer__>
     );
