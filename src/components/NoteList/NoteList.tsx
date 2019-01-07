@@ -6,6 +6,7 @@ import { facadeActions } from '../../store/actions';
 
 import { Button } from '../base-ui';
 import { NoteEditor } from '../NoteEditor';
+import { NotePreview } from '../NotePreview';
 
 import { Modal__ } from './styled';
 
@@ -58,11 +59,7 @@ export class NoteList extends React.Component<NoteListProps> {
     return (
       <div>
         {notes.map((n) => (
-          <div key={n.id}>
-            {/* TODO: move to NotePreview.tsx */}
-            <Button text={n.title} onClick={() => this.openEditor(n)} />
-            <Button text='×' onClick={() => this.removeNote(n.id)} />
-          </div>
+          <NotePreview key={n.id} note={n} openEditor={this.openEditor} removeNote={this.removeNote} />
         ))}
         <Button icon={'add'} styleMode={'task-add'} onClick={this.addNote} />
         <Modal__ {...modalProps}>{noteToEdit && <NoteEditor note={noteToEdit} dispatch={dispatch} />}</Modal__>

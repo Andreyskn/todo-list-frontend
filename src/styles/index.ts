@@ -12,4 +12,9 @@ export const GlobalStyle = createGlobalStyle`
 	#root {
 		height: 100vh;
 	}
+
+	.ReactModal__Overlay {
+		background-color: #8c8c8c !important;
+		z-index: 1;
+	}
 `;

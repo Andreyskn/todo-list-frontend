@@ -29,17 +29,17 @@ export class Sidebar extends React.Component<any, any> {
   };
 
   render() {
+    const { activeView } = this.props;
+
     return (
       <Sidebar__>
-        <Sidebar__.Button>
-          <Button text='Todo' onClick={() => this.setView('tasks')} />
+        <Sidebar__.Button active={activeView === 'tasks'}>
+          <Button text='Todo' onClick={() => this.setView('tasks')} styleMode={'nav'} />
         </Sidebar__.Button>
-        <Sidebar__.Button>
-          <Button text='Notes' onClick={() => this.setView('notes')} />
+        <Sidebar__.Button active={activeView === 'notes'}>
+          <Button text='Notes' onClick={() => this.setView('notes')} styleMode={'nav'} />
         </Sidebar__.Button>
       </Sidebar__>
     );
   }
 }
-
-// TODO: typings

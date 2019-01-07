@@ -8,7 +8,18 @@ import { Edit, Add, Save, Cross, Settings } from 'Icons';
 interface ButtonProps {
   text?: string;
   onClick: () => any;
-  styleMode?: 'tab-switcher' | 'tab-close' | 'tab-add' | 'rename' | 'task-add' | 'save' | 'remove' | 'settings';
+  styleMode?:
+    | 'tab-switcher'
+    | 'tab-close'
+    | 'tab-add'
+    | 'rename'
+    | 'task-add'
+    | 'save'
+    | 'remove'
+    | 'settings'
+    | 'nav'
+    | 'note'
+    | 'remove-note';
   icon?: 'edit' | 'add' | 'save' | 'cross' | 'settings';
 }
 

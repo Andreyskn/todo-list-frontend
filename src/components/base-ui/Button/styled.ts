@@ -11,6 +11,7 @@ const Button = styled.button`
   cursor: pointer;
   border: none;
   background: none;
+  color: inherit;
 
   & > svg {
     width: 16px;
@@ -28,6 +29,15 @@ const Span = styled.span`
 
 const applyContainerModifier = (modifier) => {
   switch (modifier) {
+    case 'note':
+      return css`
+        width: calc(100% - 40px);
+      `;
+    case 'nav':
+      return css`
+        width: 100%;
+        height: 100%;
+      `;
     case 'tab-switcher':
       return css`
         width: 100%;
@@ -80,6 +90,29 @@ const applyContainerModifier = (modifier) => {
 
 const applyButtonModifier = (modifier) => {
   switch (modifier) {
+    case 'note':
+      return css`
+        width: 100%;
+        text-align: left;
+        padding-left: 15px;
+      `;
+    case 'remove-note':
+      return css`
+        font-size: 30px;
+        padding-right: 15px;
+        transition-duration: 0.2s;
+
+        :hover {
+          color: #f00;
+        }
+      `;
+    case 'nav':
+      return css`
+        text-align: left;
+        width: 100%;
+        height: 100%;
+        padding-left: 15px;
+      `;
     case 'tab-switcher':
       return css`
         width: 100%;
