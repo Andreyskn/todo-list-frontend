@@ -91,7 +91,6 @@ const initialState: ApplicationState = {
 export const reducer: Reducer<ApplicationState> = (state = initialState, { type, payload }) => {
   switch (type) {
     case systemActionTypes.INIT:
-      return { ...payload };
     case systemActionTypes.ADD_TASK:
     case systemActionTypes.REMOVE_TASK:
     case systemActionTypes.TOGGLE_TASK:
