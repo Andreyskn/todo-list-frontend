@@ -89,7 +89,7 @@ function* removeTab({ payload: tabId }: Action<string>): Iterator<Effect> {
   } else {
     const tasksToRemove = tabs[tabId].contentIds;
     const hasSingleTask = tabs[tabId].contentIds.length === 1;
-    const firstEntity = (Object as any).values(yield select((state) => state[activeView]))[0];
+    const firstEntity = (Object as any).values(yield select((state: any) => state.application[activeView]))[0];
 
     if (isOnlyTab && hasSingleTask && !firstEntity.title && !firstEntity.done && tabs[tabId].title === freshTabTitle) {
       return;

@@ -46,7 +46,6 @@ export class NoteList extends React.Component<NoteListProps> {
   };
 
   render() {
-    console.log('render');
     const { notes, dispatch } = this.props;
     const { showEditor, noteToEdit } = this.state;
 

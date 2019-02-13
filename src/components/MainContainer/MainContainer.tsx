@@ -5,6 +5,7 @@ import { Sidebar } from '../Sidebar';
 import { Tab } from '../Tab';
 import { TabSwitchPanel } from '../TabSwitchPanel';
 import { BottomPanel } from '../BottomPanel';
+import { Preloader } from '../Preloader';
 
 import { systemActions, facadeActions } from '../../store/actions';
 import { ApplicationState } from '../../store/reducer';
@@ -58,13 +59,13 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
 
   render() {
     const {
-      application: { activeView, activeTab, tabs, tasks, notes },
+      application: { activeView, activeTab, tabs, lastRequestStatus },
       dispatch,
     } = this.props;
     const { loading } = this.state;
     const tabToRender = tabs[activeTab];
 
-    if (loading || !tabToRender) return null;
+    if (loading || !tabToRender) return <Preloader />;
 
     const activeEntities = tabToRender.contentIds.map((entityId) => this.props.application[activeView][entityId]);
     const visibleTabs = Object.keys(tabs)
@@ -87,7 +88,7 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
             dispatch={dispatch}
             settings={tabToRender.settings}
           />
-          <BottomPanel state={{ activeTab, tabs, tasks, notes }} />
+          <BottomPanel requestStatus={lastRequestStatus} dispatch={dispatch} />
         </MainContainer__.Content>
       </MainContainer__>
     );

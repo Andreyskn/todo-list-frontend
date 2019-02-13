@@ -120,6 +120,10 @@ const applyButtonModifier = (modifier) => {
         padding: 0;
         width: 60px;
 
+        :active {
+          transform: scale(0.95, 0.95);
+        }
+
         & > svg {
           width: 35px;
         }
@@ -143,24 +147,24 @@ const applyButtonModifier = (modifier) => {
 };
 
 const roundButtonStyles = `
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	background: linear-gradient(to top, #f7f7f7, #e7e7e7);
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
-	border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: linear-gradient(to top, #f7f7f7, #e7e7e7);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+  border: none;
 
-	:hover {
-		background: #f5f5f5;
-	}
+  :hover {
+    background: #f5f5f5;
+  }
 
-	:active {
-		transform: translateY(1px);
-	}
+  :active {
+    transform: translateY(1px);
+  }
 `;
 
 Button__.Button = Button;

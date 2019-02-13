@@ -9,5 +9,7 @@ declare module 'Icons' {
   const Save: any;
   const Cross: any;
   const Settings: any;
-  export { Edit, Add, Save, Cross, Settings };
+  const Error: any;
+  const Success: any;
+  export { Edit, Add, Save, Cross, Settings, Error, Success };
 }

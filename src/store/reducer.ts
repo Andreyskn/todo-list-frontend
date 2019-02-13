@@ -3,6 +3,8 @@ import { Reducer } from 'redux';
 
 export type Views = 'tasks' | 'notes';
 
+export type RequestStatus = 'pending' | 'success' | 'fail';
+
 export type Task = {
   id: string;
   title: string;
@@ -41,6 +43,7 @@ export type Notes = {
 export type ApplicationState = {
   activeView: Views;
   activeTab: string;
+  lastRequestStatus: RequestStatus | null;
   tabs: Tabs;
   tasks: Tasks;
   notes: Notes;
@@ -49,6 +52,7 @@ export type ApplicationState = {
 const initialState: ApplicationState = {
   activeView: 'tasks',
   activeTab: '0',
+  lastRequestStatus: null,
   tabs: {
     '0': {
       id: '0',
@@ -102,6 +106,7 @@ export const reducer: Reducer<ApplicationState> = (state = initialState, { type,
     case systemActionTypes.UPDATE_NOTE:
     case systemActionTypes.ADD_NOTE:
     case systemActionTypes.REMOVE_NOTE:
+    case systemActionTypes.SET_REQUEST_STATUS:
       return { ...state, ...payload };
 
     default:

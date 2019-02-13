@@ -1,4 +1,4 @@
-import { Tasks, Tabs, Notes, ApplicationState, Views } from './reducer';
+import { Tasks, Tabs, Notes, ApplicationState, Views, RequestStatus } from './reducer';
 
 export const systemActionTypes = {
   INIT: '🔥 INIT',
@@ -16,6 +16,7 @@ export const systemActionTypes = {
   UPDATE_NOTE: '🚀 UPDATE_NOTE',
   ADD_NOTE: '🚀 ADD_NOTE',
   REMOVE_NOTE: '🚀 REMOVE_NOTE',
+  SET_REQUEST_STATUS: '🚀 SET_REQUEST_STATUS',
 };
 
 export const facadeActionTypes = {
@@ -31,6 +32,7 @@ export const facadeActionTypes = {
   UPDATE_NOTE: '🏠 UPDATE_NOTE',
   ADD_NOTE: '🏠 ADD_NOTE',
   REMOVE_NOTE: '🏠 REMOVE_NOTE',
+  SAVE_REQUEST: '🏠 SAVE_REQUEST',
 };
 
 export const systemActions = {
@@ -91,6 +93,10 @@ export const systemActions = {
     type: systemActionTypes.REMOVE_NOTE,
     payload: changeSet,
   }),
+  setRequestStatus: (status: RequestStatus) => ({
+    type: systemActionTypes.SET_REQUEST_STATUS,
+    payload: { lastRequestStatus: status },
+  }),
 };
 
 export const facadeActions = {
@@ -136,4 +142,5 @@ export const facadeActions = {
     type: facadeActionTypes.REMOVE_NOTE,
     payload: { tabId, noteId },
   }),
+  saveRequest: () => ({ type: facadeActionTypes.SAVE_REQUEST }),
 };

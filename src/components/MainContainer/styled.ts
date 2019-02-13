@@ -5,6 +5,16 @@ export const MainContainer__ = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  animation: appear 0.2s linear;
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const Content = styled.div`
