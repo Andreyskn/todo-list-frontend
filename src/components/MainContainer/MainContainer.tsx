@@ -44,15 +44,24 @@ export class MainContainer extends React.Component<MainContainerProps, MainConta
     const abortController = new AbortController();
     const signal = abortController.signal;
     const fetchTimeout = new Promise((resolve, reject) => {
-      setTimeout(reject, 1000, { timeout: true });
+      setTimeout(reject, 300, { timeout: true });
     });
 
-    Promise.race<any>([fetch('/api/init', { signal }), fetchTimeout])
+    Promise.race<any>([fetch('http://localhost:3000/api/init', { signal }), fetchTimeout])
       .then((res) => res.status === 200 && res.json())
       .then((data) => data && dispatch(systemActions.init(data)))
       .catch((err) => {
         err.timeout && abortController.abort();
-        console.error('Init request failed:', err.timeout ? 'Timeout' : err);
+        console.warn('Init request to server has failed:', err.timeout ? 'Timeout' : err);
+      })
+      .then(() => {
+        const data = localStorage.getItem('todo-list-state');
+        if (data) {
+          dispatch(systemActions.init(JSON.parse(data)));
+          console.log('Loaded state from localStorage');
+        } else {
+          console.log('localStorage is empty');
+        }
       })
       .finally(() => this.setState({ loading: false }));
   }

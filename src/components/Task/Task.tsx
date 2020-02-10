@@ -25,6 +25,10 @@ export class Task extends React.Component<TaskProps, TaskState> {
     this.setState({ title: e.target.value });
   };
 
+  onKeyDown = (e: any) => {
+    // this.setState({ title: e.target.value });
+  };
+
   render() {
     const { done, removeTask, toggleTask, updateTaskTitle } = this.props;
     const { title } = this.state;
@@ -32,7 +36,13 @@ export class Task extends React.Component<TaskProps, TaskState> {
     return (
       <Task__>
         <Checkbox checked={done} onChange={toggleTask} />
-        <Input text={title} onChange={(e) => this.onChange(e)} onBlur={updateTaskTitle} />
+        <Input
+          text={title}
+          onKeyDown={this.onKeyDown}
+          onChange={this.onChange}
+          onBlur={updateTaskTitle}
+          styleMode={done ? 'done' : undefined}
+        />
         <Button icon='cross' onClick={removeTask} styleMode={'remove'} />
       </Task__>
     );

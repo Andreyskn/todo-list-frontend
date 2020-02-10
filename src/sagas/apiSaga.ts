@@ -1,4 +1,4 @@
-import { put, select, call, takeEvery, Effect } from 'redux-saga/effects';
+import { put, select, call, takeEvery, Effect, PutEffect } from 'redux-saga/effects';
 import produce from 'immer';
 
 import { systemActions, facadeActionTypes } from '../store/actions';
@@ -14,14 +14,21 @@ function* saveRequest(): Iterator<Effect> {
   yield put(systemActions.setRequestStatus('pending'));
 
   const { tabs, tasks, notes } = (yield select()).application;
-  const dataToSave = { tabs, tasks, notes };
+  const dataToSave = JSON.stringify({ tabs, tasks, notes });
 
-  const { error } = yield call(httpPost, '/api/save', dataToSave);
+  const { error } = yield call(httpPost, 'http://localhost:3000/api/save', dataToSave);
 
   if (error) {
-    console.error('Save request failed:', error.timeout ? 'Timeout' : error);
-    yield put(systemActions.setRequestStatus('fail'));
-    return;
+    console.warn('Save request to server has failed:', error.timeout ? 'Timeout' : error);
+
+    try {
+      localStorage.setItem('todo-list-state', dataToSave);
+      console.log('Successfully saved data to localStorage');
+    } catch (err) {
+      console.error('Save request to localStorage has failed:', err);
+      yield put(systemActions.setRequestStatus('fail'));
+      return;
+    }
   }
 
   yield put(systemActions.setRequestStatus('success'));

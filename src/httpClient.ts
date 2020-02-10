@@ -1,12 +1,11 @@
 // export const httpGet = (url) => {};
 
-export const httpPost = (url, data) => {
+export const httpPost = (url, body, timeout = 300) => {
   const abortController = new AbortController();
   const signal = abortController.signal;
   const fetchTimeout = new Promise((resolve, reject) => {
-    setTimeout(reject, 1000, { timeout: true });
+    setTimeout(reject, timeout, { timeout: true });
   });
-  const body = JSON.stringify(data);
   const options = { headers: { 'content-type': 'application/json' }, body, method: 'post', signal };
 
   return Promise.race<any>([fetch(url, options), fetchTimeout])

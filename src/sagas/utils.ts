@@ -3,7 +3,7 @@ import { startOfTomorrow, startOfToday } from 'date-fns';
 
 export const freshTabTitle = 'New tab';
 
-export const generateId = (ids: string[]): string => `${Math.max(...ids.map((id) => parseInt(id, 10))) + 1}`;
+export const generateId = (ids: string[]): string => `${Math.max(...ids.map((id) => Number(id))) + 1}`;
 
 export const createNewTask = (id: string, daily: boolean = false): Task => ({
   id,

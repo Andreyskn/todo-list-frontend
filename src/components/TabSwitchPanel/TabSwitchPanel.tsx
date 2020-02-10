@@ -6,7 +6,7 @@ import { TabSwitchButton } from '../TabSwitchButton';
 import { systemActions, facadeActions } from '../../store/actions';
 import { TabSwitchPanel__ } from './styled';
 
-export class TabSwitchPanel extends React.Component<any, any> {
+export class TabSwitchPanel extends React.PureComponent<any, any> {
   switchTab = (tabId) => {
     const { dispatch, activeTab } = this.props;
     if (tabId !== activeTab) dispatch(systemActions.switchTab(tabId));

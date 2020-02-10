@@ -8,6 +8,7 @@ export const TaskList__ = styled.div`
   position: relative;
   overflow: auto;
   padding: 20px;
+  height: 0;
 `;
 
 const NewTaskButton = styled.button`
